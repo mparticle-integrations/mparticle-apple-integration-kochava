@@ -1,7 +1,7 @@
 //
 //  MPKochavaSpatialCoordinate.h
 //
-//  Copyright 2015 mParticle, Inc.
+//  Copyright 2016 mParticle, Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 //  limitations under the License.
 //
 
-#if defined(MP_KIT_KOCHAVA)
-
 #import <Foundation/Foundation.h>
 
 @interface MPKochavaSpatialCoordinate : NSObject
@@ -29,5 +27,3 @@
 - (instancetype)initWithDictionary:(NSDictionary *)spatialDictionary;
 
 @end
-
-#endif
