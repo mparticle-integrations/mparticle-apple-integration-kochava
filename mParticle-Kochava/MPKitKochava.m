@@ -214,7 +214,7 @@ static MPKochavaTracker *kochavaTracker = nil;
     isNewUser = NO;
     __weak MPKitKochava *weakSelf = self;
     _configuration = configuration;
-    
+
     [self kochavaTracker:^(MPKochavaTracker *const kochavaTracker) {
         __strong MPKitKochava *strongSelf = weakSelf;
 
@@ -234,7 +234,7 @@ static MPKochavaTracker *kochavaTracker = nil;
     return self;
 }
 
-- (id const)kitInstance {
+- (id const)providerKitInstance {
     return [self started] ? kochavaTracker : nil;
 }
 
