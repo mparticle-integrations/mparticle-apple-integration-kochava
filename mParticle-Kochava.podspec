@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = "mParticle-Kochava"
-    s.version          = "6.8.0"
+    s.version          = "6.9.0"
     s.summary          = "Kochava integration for mParticle"
 
     s.description      = <<-DESC
@@ -15,6 +15,6 @@ Pod::Spec.new do |s|
 
     s.ios.deployment_target = "8.0"
     s.ios.source_files      = 'mParticle-Kochava/*.{h,m,mm}'
-    s.ios.dependency 'mParticle-Apple-SDK/mParticle', '~> 6.8'
-    s.ios.dependency 'Kochava', '20160907.1'
+    s.ios.dependency 'mParticle-Apple-SDK/mParticle', '~> 6.9'
+    s.ios.dependency 'Kochava', '20160914'
 end
