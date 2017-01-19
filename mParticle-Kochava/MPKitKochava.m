@@ -214,6 +214,7 @@ static MPKochavaTracker *kochavaTracker = nil;
     isNewUser = NO;
     __weak MPKitKochava *weakSelf = self;
     _configuration = configuration;
+    _started = startImmediately;
 
     [self kochavaTracker:^(MPKochavaTracker *const kochavaTracker) {
         __strong MPKitKochava *strongSelf = weakSelf;
@@ -223,8 +224,6 @@ static MPKochavaTracker *kochavaTracker = nil;
         }
 
         if (kochavaTracker) {
-            strongSelf->_started = startImmediately;
-
             if ([configuration[kvUseCustomerId] boolValue] || [configuration[kvIncludeOtherUserIds] boolValue]) {
                 [strongSelf synchronize];
             }
