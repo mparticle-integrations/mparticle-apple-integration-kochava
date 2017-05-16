@@ -26,4 +26,6 @@
 @property (nonatomic, strong, nullable) NSArray<NSDictionary<NSString *, id> *> *userIdentities;
 @property (nonatomic, unsafe_unretained, readonly) BOOL started;
 
++ (void)setIdentityLink:(nonnull NSDictionary *)identityLink;
+
 @end

@@ -36,6 +36,7 @@ NSString *const MPUserIdentityIdKey = @"i";
 NSString *const MPUserIdentityTypeKey = @"n";
 
 static KochavaTracker *kochavaTracker = nil;
+static NSDictionary *kochavaIdentityLink = nil;
 
 @interface MPKitKochava() {
     BOOL isNewUser;
@@ -53,6 +54,10 @@ static KochavaTracker *kochavaTracker = nil;
 + (void)load {
     MPKitRegister *kitRegister = [[MPKitRegister alloc] initWithName:@"Kochava" className:@"MPKitKochava" startImmediately:YES];
     [MParticle registerExtension:kitRegister];
+}
+
++ (void)setIdentityLink:(NSDictionary *)identityLink {
+    kochavaIdentityLink = identityLink;
 }
 
 #pragma mark Accessors and private methods
@@ -87,6 +92,10 @@ static KochavaTracker *kochavaTracker = nil;
 
             if ([MParticle sharedInstance].environment == MPEnvironmentDevelopment) {
                 kochavaInfo[kKVAParamLogLevelEnumKey] = kKVALogLevelEnumDebug;
+            }
+
+            if (kochavaIdentityLink) {
+                kochavaInfo[kKVAParamIdentityLinkDictionaryKey] = kochavaIdentityLink;
             }
 
             CFTypeRef kochavaTrackRef = CFRetain((__bridge CFTypeRef)[[KochavaTracker alloc] initWithParametersDictionary:kochavaInfo delegate:nil]);
