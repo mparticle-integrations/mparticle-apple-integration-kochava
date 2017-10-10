@@ -52,7 +52,7 @@ static NSDictionary *kochavaIdentityLink = nil;
 }
 
 + (void)load {
-    MPKitRegister *kitRegister = [[MPKitRegister alloc] initWithName:@"Kochava" className:@"MPKitKochava" startImmediately:YES];
+    MPKitRegister *kitRegister = [[MPKitRegister alloc] initWithName:@"Kochava" className:@"MPKitKochava"];
     [MParticle registerExtension:kitRegister];
 }
 
@@ -218,16 +218,18 @@ static NSDictionary *kochavaIdentityLink = nil;
 }
 
 #pragma mark MPKitInstanceProtocol methods
-- (instancetype)initWithConfiguration:(NSDictionary *)configuration startImmediately:(BOOL)startImmediately {
-    self = [super init];
-    if (!self || !configuration[kvAppId]) {
-        return nil;
+- (MPKitExecStatus *)didFinishLaunchingWithConfiguration:(NSDictionary *)configuration {
+    MPKitExecStatus *execStatus = nil;
+
+    if (!configuration[kvAppId]) {
+        execStatus = [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeRequirementsNotMet];
+        return execStatus;
     }
 
     isNewUser = NO;
     __weak MPKitKochava *weakSelf = self;
     _configuration = configuration;
-    _started = startImmediately;
+    _started = YES;
 
     [self kochavaTracker:^(KochavaTracker *const kochavaTracker) {
         __strong MPKitKochava *strongSelf = weakSelf;
@@ -243,7 +245,8 @@ static NSDictionary *kochavaIdentityLink = nil;
         }
     }];
 
-    return self;
+    execStatus = [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
+    return execStatus;
 }
 
 - (id const)providerKitInstance {
