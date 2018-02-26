@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = "mParticle-Kochava"
-    s.version          = "7.1.2"
+    s.version          = "7.1.3"
     s.summary          = "Kochava integration for mParticle"
 
     s.description      = <<-DESC
