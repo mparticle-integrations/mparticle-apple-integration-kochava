@@ -115,14 +115,15 @@ static NSDictionary *kochavaIdentityLink = nil;
 }
 
 - (void)identityLinkCustomerId {
-    if (!self.userIdentities || self.userIdentities.count == 0) {
+    FilteredMParticleUser *user = [self currentUser];
+    if (!user || user.userIdentities.count == 0) {
         return;
     }
 
-    NSMutableDictionary *identityInfo = [[NSMutableDictionary alloc] initWithCapacity:self.userIdentities.count];
+    NSMutableDictionary *identityInfo = [[NSMutableDictionary alloc] initWithCapacity:user.userIdentities.count];
     NSString *identityKey;
     MPUserIdentity userIdentity;
-    for (NSDictionary *userIdentityDictionary in self.userIdentities) {
+    for (NSDictionary *userIdentityDictionary in user.userIdentities) {
         userIdentity = [userIdentityDictionary[MPUserIdentityTypeKey] integerValue];
 
         switch (userIdentity) {
@@ -146,14 +147,15 @@ static NSDictionary *kochavaIdentityLink = nil;
 }
 
 - (void)identityLinkOtherUserIds {
-    if (!self.userIdentities || self.userIdentities.count == 0) {
+    FilteredMParticleUser *user = [self currentUser];
+    if (!user.userIdentities || user.userIdentities.count == 0) {
         return;
     }
 
-    NSMutableDictionary *identityInfo = [[NSMutableDictionary alloc] initWithCapacity:self.userIdentities.count];
+    NSMutableDictionary *identityInfo = [[NSMutableDictionary alloc] initWithCapacity:user.userIdentities.count];
     NSString *identityKey;
     MPUserIdentity userIdentity;
-    for (NSDictionary *userIdentityDictionary in self.userIdentities) {
+    for (NSDictionary *userIdentityDictionary in user.userIdentities) {
         userIdentity = [userIdentityDictionary[MPUserIdentityTypeKey] integerValue];
 
         switch (userIdentity) {
@@ -253,6 +255,14 @@ static NSDictionary *kochavaIdentityLink = nil;
     return [self started] ? kochavaTracker : nil;
 }
 
+- (MPKitAPI *)kitApi {
+    if (_kitApi == nil) {
+        _kitApi = [[MPKitAPI alloc] init];
+    }
+    
+    return _kitApi;
+}
+
 - (MPKitExecStatus *)setOptOut:(BOOL)optOut {
     [self kochavaTracker:^(KochavaTracker *const kochavaTracker) {
         [kochavaTracker setAppLimitAdTrackingBool:optOut];
@@ -263,20 +273,19 @@ static NSDictionary *kochavaIdentityLink = nil;
 }
 
 - (MPKitExecStatus *)setUserIdentity:(NSString *)identityString identityType:(MPUserIdentity)identityType {
+    FilteredMParticleUser *user = [self currentUser];
     MPKitExecStatus *execStatus = nil;
-    if (!identityString) {
+    if (!identityString || !user) {
         execStatus = [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeRequirementsNotMet];
         return execStatus;
     }
     NSDictionary *userIdentityDictionary = @{MPUserIdentityTypeKey:@(identityType),
                                              MPUserIdentityIdKey:identityString};
 
-    if ([self.userIdentities containsObject:userIdentityDictionary]) {
+    if ([user.userIdentities containsObject:userIdentityDictionary]) {
         execStatus = [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeRequirementsNotMet];
         return execStatus;
     }
-
-    self.userIdentities = nil;
 
     if (identityType == MPUserIdentityCustomerId) {
         if ([self.configuration[kvUseCustomerId] boolValue]) {
@@ -295,6 +304,12 @@ static NSDictionary *kochavaIdentityLink = nil;
     }
 
     return execStatus;
+}
+
+#pragma helper methods
+
+- (FilteredMParticleUser *)currentUser {
+    return [[self kitApi] getCurrentUserWithKit:self];
 }
 
 @end

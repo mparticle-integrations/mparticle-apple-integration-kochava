@@ -23,8 +23,8 @@
 @interface MPKitKochava : NSObject <MPKitProtocol>
 
 @property (nonatomic, strong, nonnull) NSDictionary *configuration;
-@property (nonatomic, strong, nullable) NSArray<NSDictionary<NSString *, id> *> *userIdentities;
 @property (nonatomic, unsafe_unretained, readonly) BOOL started;
+@property (nonatomic, strong, nullable) MPKitAPI *kitApi;
 
 + (void)setIdentityLink:(nonnull NSDictionary *)identityLink;
 
