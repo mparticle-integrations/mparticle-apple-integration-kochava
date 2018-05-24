@@ -32,9 +32,6 @@ NSString *const kvLimitAdTracking = @"limitAdTracking";
 NSString *const kvLogScreenFormat = @"Viewed %@";
 NSString *const kvEcommerce = @"eCommerce";
 
-NSString *const MPUserIdentityIdKey = @"i";
-NSString *const MPUserIdentityTypeKey = @"n";
-
 static KochavaTracker *kochavaTracker = nil;
 static NSDictionary *kochavaIdentityLink = nil;
 
@@ -86,8 +83,8 @@ static NSDictionary *kochavaIdentityLink = nil;
             }
 
             // Don't know whether setting this property in the dictionary will work, since it is not in the documentation
-            if (isNewUser) {
-                kochavaInfo[@"isNewUser"] = isNewUser ? @"1" : @"0";
+            if (self->isNewUser) {
+                kochavaInfo[@"isNewUser"] = self->isNewUser ? @"1" : @"0";
             }
 
             if ([MParticle sharedInstance].environment == MPEnvironmentDevelopment) {
@@ -122,21 +119,11 @@ static NSDictionary *kochavaIdentityLink = nil;
 
     NSMutableDictionary *identityInfo = [[NSMutableDictionary alloc] initWithCapacity:user.userIdentities.count];
     NSString *identityKey;
-    MPUserIdentity userIdentity;
-    for (NSDictionary *userIdentityDictionary in user.userIdentities) {
-        userIdentity = [userIdentityDictionary[MPUserIdentityTypeKey] integerValue];
 
-        switch (userIdentity) {
-            case MPUserIdentityCustomerId:
-                identityKey = @"CustomerId";
-                break;
-
-            default:
-                continue;
-                break;
-        }
-
-        identityInfo[identityKey] = userIdentityDictionary[MPUserIdentityIdKey];
+    NSString *identityValue = user.userIdentities[@(MPUserIdentityCustomerId)];
+    if (identityValue) {
+        identityKey = @"CustomerId";
+        identityInfo[identityKey] = identityValue;
     }
 
     if (identityInfo.count > 0) {
@@ -155,8 +142,8 @@ static NSDictionary *kochavaIdentityLink = nil;
     NSMutableDictionary *identityInfo = [[NSMutableDictionary alloc] initWithCapacity:user.userIdentities.count];
     NSString *identityKey;
     MPUserIdentity userIdentity;
-    for (NSDictionary *userIdentityDictionary in user.userIdentities) {
-        userIdentity = [userIdentityDictionary[MPUserIdentityTypeKey] integerValue];
+    for (NSNumber *userIdentityType in user.userIdentities) {
+        userIdentity = [userIdentityType integerValue];
 
         switch (userIdentity) {
             case MPUserIdentityEmail:
@@ -192,7 +179,10 @@ static NSDictionary *kochavaIdentityLink = nil;
                 break;
         }
 
-        identityInfo[identityKey] = userIdentityDictionary[MPUserIdentityIdKey];
+        NSString *identityValue = user.userIdentities[userIdentityType];
+        if (identityValue) {
+            identityInfo[identityKey] = identityValue;
+        }
     }
 
     if (identityInfo.count > 0) {
@@ -279,10 +269,8 @@ static NSDictionary *kochavaIdentityLink = nil;
         execStatus = [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeRequirementsNotMet];
         return execStatus;
     }
-    NSDictionary *userIdentityDictionary = @{MPUserIdentityTypeKey:@(identityType),
-                                             MPUserIdentityIdKey:identityString};
 
-    if ([user.userIdentities containsObject:userIdentityDictionary]) {
+    if (user.userIdentities[@(identityType)] && [user.userIdentities[@(identityType)] isEqual:identityString]) {
         execStatus = [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeRequirementsNotMet];
         return execStatus;
     }
