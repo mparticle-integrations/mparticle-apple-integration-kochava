@@ -22,6 +22,9 @@
 #import "MPKitRegister.h"
 #import "KochavaTracker.h"
 
+NSString *const MPKitKochavaErrorKey = @"mParticle-Kochava Error";
+NSString *const MPKitKochavaErrorDomain = @"mParticle-Kochava";
+
 NSString *const kvAppId = @"appId";
 NSString *const kvCurrency = @"currency";
 NSString *const kvUseCustomerId = @"useCustomerId";
@@ -35,7 +38,7 @@ NSString *const kvEcommerce = @"eCommerce";
 static KochavaTracker *kochavaTracker = nil;
 static NSDictionary *kochavaIdentityLink = nil;
 
-@interface MPKitKochava() {
+@interface MPKitKochava() <KochavaTrackerDelegate> {
     BOOL isNewUser;
 }
 
@@ -95,7 +98,7 @@ static NSDictionary *kochavaIdentityLink = nil;
                 kochavaInfo[kKVAParamIdentityLinkDictionaryKey] = kochavaIdentityLink;
             }
 
-            CFTypeRef kochavaTrackRef = CFRetain((__bridge CFTypeRef)[[KochavaTracker alloc] initWithParametersDictionary:kochavaInfo delegate:nil]);
+            CFTypeRef kochavaTrackRef = CFRetain((__bridge CFTypeRef)[[KochavaTracker alloc] initWithParametersDictionary:kochavaInfo delegate:self]);
             kochavaTracker = (__bridge KochavaTracker *)kochavaTrackRef;
 
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -192,11 +195,28 @@ static NSDictionary *kochavaIdentityLink = nil;
     }
 }
 
+- (NSError *)errorWithMessage:(NSString *)message {
+    NSError *error = [NSError errorWithDomain:MPKitKochavaErrorDomain code:0 userInfo:@{MPKitKochavaErrorKey:message}];
+    return error;
+}
+
 - (void)retrieveAttributionWithCompletionHandler:(void(^)(NSDictionary *attribution))completionHandler {
     [self kochavaTracker:^(KochavaTracker *const kochavaTracker) {
         NSDictionary *attribution = [kochavaTracker attributionDictionary];
         completionHandler(attribution);
     }];
+}
+
+- (void)tracker:(nonnull KochavaTracker *)tracker didRetrieveAttributionDictionary:(nonnull NSDictionary *)attributionDictionary {
+    if (!attributionDictionary) {
+        [self->_kitApi onAttributionCompleteWithResult:nil error:[self errorWithMessage:@"Received nil attributionData from Kochava"]];
+        return;
+    }
+    
+    MPAttributionResult *attributionResult = [[MPAttributionResult alloc] init];
+    attributionResult.linkInfo = attributionDictionary;
+    
+    [self->_kitApi onAttributionCompleteWithResult:attributionResult error:nil];
 }
 
 - (void)synchronize {

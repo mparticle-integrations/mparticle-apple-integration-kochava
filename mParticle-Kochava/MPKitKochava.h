@@ -20,6 +20,9 @@
 #import "MPKitExecStatus.h"
 #import "MPKitProtocol.h"
 
+extern NSString * _Nonnull const MPKitKochavaErrorKey;
+extern NSString * _Nonnull const MPKitKochavaErrorDomain;
+
 @interface MPKitKochava : NSObject <MPKitProtocol>
 
 @property (nonatomic, strong, nonnull) NSDictionary *configuration;
