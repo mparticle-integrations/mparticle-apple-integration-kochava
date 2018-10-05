@@ -78,7 +78,7 @@ static NSDictionary *kochavaIdentityLink = nil;
             }
 
             if (self.configuration[kvEnableLogging]) {
-                kochavaInfo[@"enableLogging"] = [self.configuration[kvEnableLogging] boolValue] ? @"1" : @"0";
+                kochavaInfo[kKVAParamLogLevelEnumKey] = [self.configuration[kvEnableLogging] boolValue] ? kKVALogLevelEnumDebug : kKVALogLevelEnumNone;
             }
 
             if (self.configuration[kvRetrieveAttributionData]) {
@@ -88,10 +88,6 @@ static NSDictionary *kochavaIdentityLink = nil;
             // Don't know whether setting this property in the dictionary will work, since it is not in the documentation
             if (self->isNewUser) {
                 kochavaInfo[@"isNewUser"] = self->isNewUser ? @"1" : @"0";
-            }
-
-            if ([MParticle sharedInstance].environment == MPEnvironmentDevelopment) {
-                kochavaInfo[kKVAParamLogLevelEnumKey] = kKVALogLevelEnumDebug;
             }
 
             if (kochavaIdentityLink) {
