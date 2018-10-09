@@ -38,9 +38,7 @@ NSString *const kvEcommerce = @"eCommerce";
 static KochavaTracker *kochavaTracker = nil;
 static NSDictionary *kochavaIdentityLink = nil;
 
-@interface MPKitKochava() <KochavaTrackerDelegate> {
-    BOOL isNewUser;
-}
+@interface MPKitKochava() <KochavaTrackerDelegate>
 
 @end
 
@@ -91,11 +89,6 @@ static NSDictionary *kochavaIdentityLink = nil;
                     kochavaInfo[kKVAParamRetrieveAttributionBoolKey] =  @NO;
                 }
                 
-            }
-
-            // Don't know whether setting this property in the dictionary will work, since it is not in the documentation
-            if (self->isNewUser) {
-                kochavaInfo[@"isNewUser"] = self->isNewUser ? @"1" : @"0";
             }
 
             if (kochavaIdentityLink) {
@@ -242,7 +235,6 @@ static NSDictionary *kochavaIdentityLink = nil;
         return execStatus;
     }
 
-    isNewUser = NO;
     __weak MPKitKochava *weakSelf = self;
     _configuration = configuration;
     _started = YES;
