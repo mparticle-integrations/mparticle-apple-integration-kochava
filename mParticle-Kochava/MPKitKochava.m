@@ -81,8 +81,16 @@ static NSDictionary *kochavaIdentityLink = nil;
                 kochavaInfo[kKVAParamLogLevelEnumKey] = [self.configuration[kvEnableLogging] boolValue] ? kKVALogLevelEnumDebug : kKVALogLevelEnumNone;
             }
 
+            id<KochavaTrackerDelegate> delegate = nil;
+
             if (self.configuration[kvRetrieveAttributionData]) {
-                kochavaInfo[kKVAParamRetrieveAttributionBoolKey] = [self.configuration[kvRetrieveAttributionData] boolValue] ? @YES : @NO;
+                if ([self.configuration[kvRetrieveAttributionData] boolValue]) {
+                    kochavaInfo[kKVAParamRetrieveAttributionBoolKey] =  @YES;
+                    delegate = self;
+                } else {
+                    kochavaInfo[kKVAParamRetrieveAttributionBoolKey] =  @NO;
+                }
+                
             }
 
             // Don't know whether setting this property in the dictionary will work, since it is not in the documentation
@@ -94,7 +102,7 @@ static NSDictionary *kochavaIdentityLink = nil;
                 kochavaInfo[kKVAParamIdentityLinkDictionaryKey] = kochavaIdentityLink;
             }
 
-            CFTypeRef kochavaTrackRef = CFRetain((__bridge CFTypeRef)[[KochavaTracker alloc] initWithParametersDictionary:kochavaInfo delegate:self]);
+            CFTypeRef kochavaTrackRef = CFRetain((__bridge CFTypeRef)[[KochavaTracker alloc] initWithParametersDictionary:kochavaInfo delegate:delegate]);
             kochavaTracker = (__bridge KochavaTracker *)kochavaTrackRef;
 
             dispatch_async(dispatch_get_main_queue(), ^{
