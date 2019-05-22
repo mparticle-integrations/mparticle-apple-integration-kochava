@@ -35,7 +35,7 @@ NSString *const spatialZ = @"SpatialZ";
     if (!containsSpatialCoordinate) {
         return nil;
     }
-
+    
     _x = [spatialDictionary[spatialX] floatValue];
     _y = [spatialDictionary[spatialY] floatValue];
     _z = [spatialDictionary[spatialZ] floatValue];
