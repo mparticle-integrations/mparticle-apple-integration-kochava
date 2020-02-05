@@ -6,6 +6,9 @@
 
 NSString *const MPKitKochavaErrorKey = @"mParticle-Kochava Error";
 NSString *const MPKitKochavaErrorDomain = @"mParticle-Kochava";
+NSString *const MPKitKochavaEnhancedDeeplinkKey = @"mParticle-Kochava Enhanced Deeplink";
+NSString *const MPKitKochavaEnhancedDeeplinkDestinationKey = @"destination";
+NSString *const MPKitKochavaEnhancedDeeplinkRawKey = @"raw";
 
 NSString *const kvAppId = @"appId";
 NSString *const kvCurrency = @"currency";
@@ -292,7 +295,35 @@ static NSDictionary *kochavaIdentityLink = nil;
     return execStatus;
 }
 
-#pragma helper methods
+- (MPKitExecStatus *)continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void(^ )(NSArray * restorableObjects))restorationHandler {
+    NSURL *url = userActivity.webpageURL;
+    
+    [KVADeeplink processWithURL:url completionHandler:^(KVADeeplink * _Nonnull deeplink) {
+        if (!deeplink) {
+            [self->_kitApi onAttributionCompleteWithResult:nil error:[self errorWithMessage:@"Received nil deeplink from Kochava"]];
+            return;
+        }
+        
+        NSMutableDictionary *innerDictionary = [NSMutableDictionary dictionary];
+        if (deeplink.destinationString) {
+            innerDictionary[MPKitKochavaEnhancedDeeplinkDestinationKey] = deeplink.destinationString;
+        }
+        if (deeplink.rawDictionary) {
+            innerDictionary[MPKitKochavaEnhancedDeeplinkRawKey] = deeplink.rawDictionary;
+        }
+        
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+        dictionary[MPKitKochavaEnhancedDeeplinkKey] = [innerDictionary copy];
+        
+        MPAttributionResult *attributionResult = [[MPAttributionResult alloc] init];
+        attributionResult.linkInfo = [dictionary copy];
+        
+        [self->_kitApi onAttributionCompleteWithResult:attributionResult error:nil];
+    }];
+    return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
+}
+
+#pragma mark Helper methods
 
 - (FilteredMParticleUser *)currentUser {
     return [[self kitApi] getCurrentUserWithKit:self];
