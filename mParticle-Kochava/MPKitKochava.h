@@ -7,6 +7,9 @@
 
 extern NSString * _Nonnull const MPKitKochavaErrorKey;
 extern NSString * _Nonnull const MPKitKochavaErrorDomain;
+extern NSString * _Nonnull const MPKitKochavaEnhancedDeeplinkKey;
+extern NSString * _Nonnull const MPKitKochavaEnhancedDeeplinkDestinationKey;
+extern NSString * _Nonnull const MPKitKochavaEnhancedDeeplinkRawKey;
 
 @interface MPKitKochava : NSObject <MPKitProtocol>
 

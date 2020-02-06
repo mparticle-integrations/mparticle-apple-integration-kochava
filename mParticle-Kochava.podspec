@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
     s.ios.deployment_target = "8.0"
     s.ios.source_files      = 'mParticle-Kochava/*.{h,m,mm}'
     s.ios.dependency 'mParticle-Apple-SDK/mParticle', '~> 7.0'
-    s.ios.dependency 'KochavaTrackeriOS', '~> 3.7.0'
+    s.ios.dependency 'KochavaTrackeriOS', '~> 3.0'
     s.ios.pod_target_xcconfig = {
         'LIBRARY_SEARCH_PATHS' => '$(inherited) $(PODS_ROOT)/KochavaTrackeriOS/**',
         'OTHER_LDFLAGS' => '$(inherited) -l"KochavaTrackeriOS"'
