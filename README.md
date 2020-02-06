@@ -16,6 +16,34 @@ This repository contains the [Kochava](https://www.kochava.com) integration for 
 
 3. Reference mParticle's integration docs below to enable the integration.
 
+### Deeplinking and attribution
+
+Set the property `onAttributionComplete:` on `MParticleOptions` when initializing the mParticle SDK. A copy of your block will be invoked to provide the respective information:
+
+```objective-c
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    MParticleOptions *options = [MParticleOptions optionsWithKey:@"<<Your app key>>" secret:@"<<Your app secret>>"];
+    options.onAttributionComplete = ^void (MPAttributionResult *_Nullable attributionResult, NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"Attribution fetching for kitCode=%@ failed with error=%@", error.userInfo[mParticleKitInstanceKey], error);
+            return;
+        }
+
+        if (attributionResult.linkInfo[MPKitKochavaEnhancedDeeplinkKey]) {
+            // deeplinking result
+            NSDictionary *deeplinkInfo = attributionResult.linkInfo[MPKitKochavaEnhancedDeeplinkKey];
+            NSLog(@"Deeplink fetching for kitCode=%@ completed with destination: %@ raw: %@", attributionResult.kitCode, deeplinkInfo[MPKitKochavaEnhancedDeeplinkDestinationKey], deeplinkInfo[MPKitKochavaEnhancedDeeplinkRawKey]);
+        } else {
+            // attribution result
+            NSLog(@"Attribution fetching for kitCode=%@ completed with linkInfo: %@", attributionResult.kitCode, attributionResult.linkInfo);
+        }
+    };
+    [[MParticle sharedInstance] startWithOptions:options];
+
+    return YES;
+}
+```
+
 ### Documentation
 
 [Kochava integration](https://docs.mparticle.com/integrations/kochava/event/)
