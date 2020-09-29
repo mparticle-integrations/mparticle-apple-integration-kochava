@@ -66,3 +66,6 @@ fastlane/test_output
 **/*.xcworkspace
 **/*.DS_Store
 *.DS_Store
+/.build
+/Packages
+
