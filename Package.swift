@@ -6,9 +6,7 @@ let package = Package(
     name: "mParticle-Kochava",
     platforms: [
             .iOS("10.3"),
-            .macOS("10.14"),
             .tvOS("10.2"),
-            .watchOS("3.2")
         ],
     products: [
         .library(
