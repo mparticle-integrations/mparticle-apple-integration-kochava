@@ -2,6 +2,16 @@
 
 This repository contains the [Kochava](https://www.kochava.com) integration for the [mParticle Apple SDK](https://github.com/mParticle/mparticle-apple-sdk).
 
+## Installation
+
+KochavaTracker 4.0.0 and on is a Swift package.  To install it, simply add this package as a dependency.
+
+In Xcode, see File > Swift Packages > Add Package Dependency ... > and enter the URL for this package repository.
+
+## Integration using CocoaPods
+
+Prior to 4.0.0, KochavaTracker supported CocoaPods.
+
 ### Adding the integration
 
 1. Add the kit dependency to your app's Podfile:
