@@ -17,6 +17,7 @@ extern NSString * _Nonnull const MPKitKochavaEnhancedDeeplinkRawKey;
 @property (nonatomic, unsafe_unretained, readonly) BOOL started;
 @property (nonatomic, strong, nullable) MPKitAPI *kitApi;
 
+- (void)retrieveAttributionWithCompletionHandler:(void(^)(NSDictionary *attribution))completionHandler;
 + (void)addCustomIdentityLinks:(nonnull NSDictionary *)identityLink;
 
 @end

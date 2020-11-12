@@ -125,10 +125,19 @@ NSString *const kvEcommerce = @"eCommerce";
     return error;
 }
 
-- (void)retrieveAttributionWithCompletionHandler:(void(^)(KVAAttributionResult *attribution))completionHandler {
+- (void)retrieveAttributionWithCompletionHandler:(void(^)(NSDictionary *attribution))completionHandler {
     [KVATracker.shared.attribution retrieveResultWithCompletionHandler:^(KVAAttributionResult * _Nonnull attributionResult)
     {
-        completionHandler(attributionResult);
+        if (!attributionResult.rawDictionary) {
+                [self->_kitApi onAttributionCompleteWithResult:nil error:[self errorWithMessage:@"Received nil attributionData from Kochava"]];
+        } else {
+            MPAttributionResult *mParticleResult = [[MPAttributionResult alloc] init];
+            mParticleResult.linkInfo = attributionResult.rawDictionary;
+
+            [self->_kitApi onAttributionCompleteWithResult:mParticleResult error:nil];
+        }
+        
+        completionHandler(attributionResult.rawDictionary);
     }];
 }
 
