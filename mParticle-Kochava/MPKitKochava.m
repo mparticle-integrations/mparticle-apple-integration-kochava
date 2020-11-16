@@ -137,7 +137,9 @@ NSString *const kvEcommerce = @"eCommerce";
             [self->_kitApi onAttributionCompleteWithResult:mParticleResult error:nil];
         }
         
-        completionHandler(attributionResult.rawDictionary);
+        if (completionHandler) {
+            completionHandler(attributionResult.rawDictionary);
+        }
     }];
 }
 
@@ -184,7 +186,8 @@ NSString *const kvEcommerce = @"eCommerce";
                                                             object:nil
                                                           userInfo:userInfo];
     });
-    ///
+    
+    [self retrieveAttributionWithCompletionHandler:nil];
     
     execStatus = [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
     return execStatus;
