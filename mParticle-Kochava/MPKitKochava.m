@@ -20,10 +20,7 @@ NSString *const kvLimitAdTracking = @"limitAdTracking";
 NSString *const kvLogScreenFormat = @"Viewed %@";
 NSString *const kvEcommerce = @"eCommerce";
 
-static KochavaTracker *kochavaTracker = nil;
-static NSDictionary *kochavaIdentityLink = nil;
-
-@interface MPKitKochava() <KochavaTrackerDelegate>
+@interface MPKitKochava()
 
 @end
 
@@ -39,63 +36,13 @@ static NSDictionary *kochavaIdentityLink = nil;
     [MParticle registerExtension:kitRegister];
 }
 
-+ (void)setIdentityLink:(NSDictionary *)identityLink {
-    kochavaIdentityLink = identityLink;
++ (void)addCustomIdentityLinks:(NSDictionary *)identityLink {
+    for (NSString *key in identityLink.allKeys) {
+        [KVATracker.shared.identityLink registerWithNameString:key identifierString:identityLink[key]];
+    }
 }
 
 #pragma mark Accessors and private methods
-- (void)kochavaTracker:(void (^)(KochavaTracker *const kochavaTracker))completionHandler {
-    static dispatch_once_t kochavaPredicate;
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        dispatch_once(&kochavaPredicate, ^{
-            NSMutableDictionary *kochavaInfo = [@{kKVAParamAppGUIDStringKey:self.configuration[kvAppId]
-                                                  } mutableCopy];
-            
-            if (self.configuration[kvCurrency]) {
-                kochavaInfo[@"currency"] = self.configuration[kvCurrency];
-            }
-            
-            if (self.configuration[kvLimitAdTracking]) {
-                kochavaInfo[kKVAParamAppLimitAdTrackingBoolKey] = [self.configuration[kvLimitAdTracking] boolValue] ? @YES : @NO;
-            }
-            
-            if (self.configuration[kvEnableLogging]) {
-                kochavaInfo[kKVAParamLogLevelEnumKey] = [self.configuration[kvEnableLogging] boolValue] ? kKVALogLevelEnumDebug : kKVALogLevelEnumNone;
-            }
-            
-            id<KochavaTrackerDelegate> delegate = nil;
-            
-            if (self.configuration[kvRetrieveAttributionData]) {
-                if ([self.configuration[kvRetrieveAttributionData] boolValue]) {
-                    kochavaInfo[kKVAParamRetrieveAttributionBoolKey] =  @YES;
-                    delegate = self;
-                } else {
-                    kochavaInfo[kKVAParamRetrieveAttributionBoolKey] =  @NO;
-                }
-                
-            }
-            
-            if (kochavaIdentityLink) {
-                kochavaInfo[kKVAParamIdentityLinkDictionaryKey] = kochavaIdentityLink;
-            }
-            
-            CFTypeRef kochavaTrackRef = CFRetain((__bridge CFTypeRef)[[KochavaTracker alloc] initWithParametersDictionary:kochavaInfo delegate:delegate]);
-            kochavaTracker = (__bridge KochavaTracker *)kochavaTrackRef;
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSDictionary *userInfo = @{mParticleKitInstanceKey:[[self class] kitCode]};
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:mParticleKitDidBecomeActiveNotification
-                                                                    object:nil
-                                                                  userInfo:userInfo];
-            });
-        });
-        
-        completionHandler(kochavaTracker);
-    });
-}
-
 - (void)identityLinkCustomerId {
     FilteredMParticleUser *user = [self currentUser];
     if (!user || user.userIdentities.count == 0) {
@@ -111,10 +58,8 @@ static NSDictionary *kochavaIdentityLink = nil;
         identityInfo[identityKey] = identityValue;
     }
     
-    if (identityInfo.count > 0) {
-        [self kochavaTracker:^(KochavaTracker *const kochavaTracker) {
-            [kochavaTracker sendIdentityLinkWithDictionary:(NSDictionary *)identityInfo];
-        }];
+    for (NSString *key in identityInfo.allKeys) {
+        [KVATracker.shared.identityLink registerWithNameString:key identifierString:identityInfo[key]];
     }
 }
 
@@ -170,10 +115,8 @@ static NSDictionary *kochavaIdentityLink = nil;
         }
     }
     
-    if (identityInfo.count > 0) {
-        [self kochavaTracker:^(KochavaTracker *const kochavaTracker) {
-            [kochavaTracker sendIdentityLinkWithDictionary:(NSDictionary *)identityInfo];
-        }];
+    for (NSString *key in identityInfo.allKeys) {
+        [KVATracker.shared.identityLink registerWithNameString:key identifierString:identityInfo[key]];
     }
 }
 
@@ -183,22 +126,21 @@ static NSDictionary *kochavaIdentityLink = nil;
 }
 
 - (void)retrieveAttributionWithCompletionHandler:(void(^)(NSDictionary *attribution))completionHandler {
-    [self kochavaTracker:^(KochavaTracker *const kochavaTracker) {
-        NSDictionary *attribution = [kochavaTracker attributionDictionary];
-        completionHandler(attribution);
-    }];
-}
+    [KVATracker.shared.attribution retrieveResultWithCompletionHandler:^(KVAAttributionResult * _Nonnull attributionResult)
+    {
+        if (!attributionResult.rawDictionary) {
+                [self->_kitApi onAttributionCompleteWithResult:nil error:[self errorWithMessage:@"Received nil attributionData from Kochava"]];
+        } else {
+            MPAttributionResult *mParticleResult = [[MPAttributionResult alloc] init];
+            mParticleResult.linkInfo = attributionResult.rawDictionary;
 
-- (void)tracker:(nonnull KochavaTracker *)tracker didRetrieveAttributionDictionary:(nonnull NSDictionary *)attributionDictionary {
-    if (!attributionDictionary) {
-        [self->_kitApi onAttributionCompleteWithResult:nil error:[self errorWithMessage:@"Received nil attributionData from Kochava"]];
-        return;
-    }
-    
-    MPAttributionResult *attributionResult = [[MPAttributionResult alloc] init];
-    attributionResult.linkInfo = attributionDictionary;
-    
-    [self->_kitApi onAttributionCompleteWithResult:attributionResult error:nil];
+            [self->_kitApi onAttributionCompleteWithResult:mParticleResult error:nil];
+        }
+        
+        if (completionHandler) {
+            completionHandler(attributionResult.rawDictionary);
+        }
+    }];
 }
 
 - (void)synchronize {
@@ -220,30 +162,39 @@ static NSDictionary *kochavaIdentityLink = nil;
         return execStatus;
     }
     
-    __weak MPKitKochava *weakSelf = self;
     _configuration = configuration;
     _started = YES;
     
-    [self kochavaTracker:^(KochavaTracker *const kochavaTracker) {
-        __strong MPKitKochava *strongSelf = weakSelf;
+    [KVATracker.shared startWithAppGUIDString:self.configuration[kvAppId]];
+    
+    if (self.configuration[kvLimitAdTracking]) {
+        KVATracker.shared.appLimitAdTrackingBool = [self.configuration[kvLimitAdTracking] boolValue] ? @YES : @NO;
+    }
+    
+    if (self.configuration[kvEnableLogging]) {
+        KVALog.shared.level = [self.configuration[kvEnableLogging] boolValue] ? KVALogLevel.debug : KVALogLevel.never;
+    }
+    
+    if ([configuration[kvUseCustomerId] boolValue] || [configuration[kvIncludeOtherUserIds] boolValue]) {
+        [self synchronize];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSDictionary *userInfo = @{mParticleKitInstanceKey:[[self class] kitCode]};
         
-        if (!strongSelf) {
-            return;
-        }
-        
-        if (kochavaTracker) {
-            if ([configuration[kvUseCustomerId] boolValue] || [configuration[kvIncludeOtherUserIds] boolValue]) {
-                [strongSelf synchronize];
-            }
-        }
-    }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:mParticleKitDidBecomeActiveNotification
+                                                            object:nil
+                                                          userInfo:userInfo];
+    });
+    
+    [self retrieveAttributionWithCompletionHandler:nil];
     
     execStatus = [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
     return execStatus;
 }
 
 - (id const)providerKitInstance {
-    return [self started] ? kochavaTracker : nil;
+    return [self started] ? KVATracker.shared : nil;
 }
 
 - (MPKitAPI *)kitApi {
@@ -255,9 +206,7 @@ static NSDictionary *kochavaIdentityLink = nil;
 }
 
 - (MPKitExecStatus *)setOptOut:(BOOL)optOut {
-    [self kochavaTracker:^(KochavaTracker *const kochavaTracker) {
-        [kochavaTracker setAppLimitAdTrackingBool:optOut];
-    }];
+    KVATracker.shared.appLimitAdTrackingBool = optOut;
     
     MPKitExecStatus *execStatus = [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
     return execStatus;
