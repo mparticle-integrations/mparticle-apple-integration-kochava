@@ -17,7 +17,7 @@ Prior to 4.0.0, KochavaTracker supported CocoaPods.
 1. Add the kit dependency to your app's Podfile:
 
     ```
-    pod 'mParticle-Kochava', '~> 7.0'
+    pod 'mParticle-Kochava', '~> 8.0'
     ```
 
 2. Follow the mParticle iOS SDK [quick-start](https://github.com/mParticle/mparticle-apple-sdk), then rebuild and launch your app, and verify that you see `"Included kits: { Kochava }"` in your Xcode console 

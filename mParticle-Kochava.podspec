@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = "mParticle-Kochava"
-    s.version          = "8.0.1"
+    s.version          = "8.0.2"
     s.summary          = "Kochava integration for mParticle"
 
     s.description      = <<-DESC
@@ -20,6 +20,7 @@ Pod::Spec.new do |s|
     s.ios.dependency 'KochavaTrackeriOS', '~> 4.0'
     s.ios.pod_target_xcconfig = {
         'LIBRARY_SEARCH_PATHS' => '$(inherited) $(PODS_ROOT)/KochavaTrackeriOS/**',
-        'OTHER_LDFLAGS' => '$(inherited) -l"KochavaTrackeriOS"'
-    }
+        'OTHER_LDFLAGS' => '$(inherited) -l"KochavaTrackeriOS"',
+	'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+    s.ios.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
 end
