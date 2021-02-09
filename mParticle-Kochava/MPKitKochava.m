@@ -1,18 +1,8 @@
 #import "MPKitKochava.h"
 #import "MPKochavaSpatialCoordinate.h"
-#import "mParticle.h"
-#import "MPKitRegister.h"
-#import "MPEnums.h"
-#if defined(__has_include) && __has_include(<KochavaTracker/KochavaTracker.h>)
+#import <mParticle_Apple_SDK/mParticle.h>
+#import <mParticle_Apple_SDK/MPKitRegister.h>
 #import <KochavaTracker/KochavaTracker.h>
-#else
-#import "KochavaTracker.h"
-#endif
-#if defined(__has_include) && __has_include(<KochavaAdNetwork/KochavaAdNetwork.h>)
-#import <KochavaAdNetwork/KochavaAdNetwork.h>
-#else
-#import "KochavaAdNetwork.h"
-#endif
 
 NSString *const MPKitKochavaErrorKey = @"mParticle-Kochava Error";
 NSString *const MPKitKochavaErrorDomain = @"mParticle-Kochava";
