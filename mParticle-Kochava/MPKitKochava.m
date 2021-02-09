@@ -1,8 +1,8 @@
 #import "MPKitKochava.h"
 #import "MPKochavaSpatialCoordinate.h"
-#import "mParticle.h"
-#import "MPKitRegister.h"
-#import "KochavaTracker.h"
+#import <mParticle_Apple_SDK/mParticle.h>
+#import <mParticle_Apple_SDK/MPKitRegister.h>
+#import <KochavaTracker/KochavaTracker.h>
 
 NSString *const MPKitKochavaErrorKey = @"mParticle-Kochava Error";
 NSString *const MPKitKochavaErrorDomain = @"mParticle-Kochava";
