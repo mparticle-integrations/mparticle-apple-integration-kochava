@@ -15,22 +15,7 @@
 		39F881D825D211240061916D /* MPKitKochava.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F881D425D211240061916D /* MPKitKochava.m */; };
 		39F881D925D211240061916D /* MPKochavaSpatialCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 39F881D525D211240061916D /* MPKochavaSpatialCoordinate.m */; };
 		39F881EA25D214DD0061916D /* mParticle_Apple_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39F881E925D214DD0061916D /* mParticle_Apple_SDK.framework */; };
-		39F881EB25D214DD0061916D /* mParticle_Apple_SDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 39F881E925D214DD0061916D /* mParticle_Apple_SDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		39F881E525D213610061916D /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				39F881EB25D214DD0061916D /* mParticle_Apple_SDK.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		39F16BF625D3044700D37AD7 /* KochavaCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = KochavaCore.xcframework; sourceTree = "<group>"; };
@@ -127,7 +112,6 @@
 				39F881C125D210CD0061916D /* Sources */,
 				39F881C225D210CD0061916D /* Frameworks */,
 				39F881C325D210CD0061916D /* Resources */,
-				39F881E525D213610061916D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
