@@ -165,6 +165,7 @@ NSString *const kvEcommerce = @"eCommerce";
     _configuration = configuration;
     _started = YES;
     
+    KVATracker.shared.appTrackingTransparency.enabledBool = NO;
     [KVATracker.shared startWithAppGUIDString:self.configuration[kvAppId]];
     
     if (self.configuration[kvLimitAdTracking]) {
@@ -269,6 +270,12 @@ NSString *const kvEcommerce = @"eCommerce";
         
         [self->_kitApi onAttributionCompleteWithResult:attributionResult error:nil];
     }];
+    return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
+}
+
+- (MPKitExecStatus *)setATTStatus:(MPATTAuthorizationStatus)status withATTStatusTimestampMillis:(NSNumber *)attStatusTimestampMillis  API_AVAILABLE(ios(14)){
+    KVATracker.shared.appTrackingTransparency.enabledBool = YES;
+
     return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
 }
 
