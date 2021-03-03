@@ -19,6 +19,9 @@ NSString *const kvEnableLogging = @"enableLogging";
 NSString *const kvLimitAdTracking = @"limitAdTracking";
 NSString *const kvLogScreenFormat = @"Viewed %@";
 NSString *const kvEcommerce = @"eCommerce";
+NSString *const kvEnableATT = @"enableATT";
+NSString *const kvEnableATTPrompt = @"enableATTPrompt";
+NSString *const kvWaitIntervalATT = @"waitIntervalATT";
 
 @interface MPKitKochava()
 
@@ -165,7 +168,17 @@ NSString *const kvEcommerce = @"eCommerce";
     _configuration = configuration;
     _started = YES;
     
-    KVATracker.shared.appTrackingTransparency.enabledBool = NO;
+    if (self.configuration[kvEnableATT]) {
+        KVATracker.shared.appTrackingTransparency.enabledBool = [self.configuration[kvEnableATT] boolValue] ? @YES : @NO;
+    }
+
+    if (self.configuration[kvEnableATTPrompt]) {
+        KVATracker.shared.appTrackingTransparency.autoRequestTrackingAuthorizationBool = [self.configuration[kvEnableATTPrompt] boolValue] ? @YES : @NO;
+        if (self.configuration[kvWaitIntervalATT] && [self.configuration[kvEnableATTPrompt] boolValue]) {
+            KVATracker.shared.appTrackingTransparency.authorizationStatusWaitTimeInterval = [self.configuration[kvWaitIntervalATT] integerValue];
+        }
+    }
+
     [KVATracker.shared startWithAppGUIDString:self.configuration[kvAppId]];
     
     if (self.configuration[kvLimitAdTracking]) {
