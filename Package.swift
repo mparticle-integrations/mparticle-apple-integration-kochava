@@ -14,7 +14,7 @@ let package = Package(
             targets: ["mParticle-Kochava"]),
     ],
     dependencies: [
-        .package(name: "mParticle-Apple-SDK", url: "git@github.com:mParticle/mparticle-apple-sdk.git", from: "8.0.1"),
+        .package(name: "mParticle-Apple-SDK", url: "git@github.com:mParticle/mparticle-apple-sdk.git", from: "8.2"),
         .package(
                     name: "KochavaCore",
                     url: "https://github.com/Kochava/Apple-SwiftPackage-KochavaCore",
