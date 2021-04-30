@@ -3,6 +3,8 @@
 #import "mParticle.h"
 #import "MPKitRegister.h"
 #import "KochavaTracker.h"
+#import "KochavaAdNetwork.h"
+#import "MPIConstants.h"
 
 NSString *const MPKitKochavaErrorKey = @"mParticle-Kochava Error";
 NSString *const MPKitKochavaErrorDomain = @"mParticle-Kochava";
@@ -169,20 +171,22 @@ NSString *const kvWaitIntervalATT = @"waitIntervalATT";
     _started = YES;
     
     if (self.configuration[kvEnableATT]) {
-        KVATracker.shared.appTrackingTransparency.enabledBool = [self.configuration[kvEnableATT] boolValue] ? @YES : @NO;
+        KVATracker.shared.appTrackingTransparency.enabledBool = [self.configuration[kvEnableATT] boolValue] ? TRUE : FALSE;
     }
 
     if (self.configuration[kvEnableATTPrompt]) {
-        KVATracker.shared.appTrackingTransparency.autoRequestTrackingAuthorizationBool = [self.configuration[kvEnableATTPrompt] boolValue] ? @YES : @NO;
+        KVATracker.shared.appTrackingTransparency.autoRequestTrackingAuthorizationBool = [self.configuration[kvEnableATTPrompt] boolValue] ? TRUE : FALSE;
         if (self.configuration[kvWaitIntervalATT] && [self.configuration[kvEnableATTPrompt] boolValue]) {
             KVATracker.shared.appTrackingTransparency.authorizationStatusWaitTimeInterval = [self.configuration[kvWaitIntervalATT] integerValue];
         }
     }
+    
+    [KVAAdNetworkProduct.shared register];
 
     [KVATracker.shared startWithAppGUIDString:self.configuration[kvAppId]];
-    
+        
     if (self.configuration[kvLimitAdTracking]) {
-        KVATracker.shared.appLimitAdTrackingBool = [self.configuration[kvLimitAdTracking] boolValue] ? @YES : @NO;
+        KVATracker.shared.appLimitAdTrackingBool = [self.configuration[kvLimitAdTracking] boolValue] ? TRUE : FALSE;
     }
     
     if (self.configuration[kvEnableLogging]) {
@@ -224,6 +228,51 @@ NSString *const kvWaitIntervalATT = @"waitIntervalATT";
     
     MPKitExecStatus *execStatus = [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
     return execStatus;
+}
+
+- (nonnull MPKitExecStatus *)logBaseEvent:(nonnull MPBaseEvent *)event {
+    if ([event isKindOfClass:[MPEvent class]]) {
+        return [self routeEvent:(MPEvent *)event];
+    } else if ([event isKindOfClass:[MPCommerceEvent class]]) {
+        return [self routeCommerceEvent:(MPCommerceEvent *)event];
+    } else {
+        return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeUnavailable];
+    }
+}
+
+- (MPKitExecStatus *)routeEvent:(MPEvent *)event {
+    KVAEvent *kochavaEvent = [KVAEvent eventWithType:KVAEventType.custom];
+    kochavaEvent.customEventNameString = NSStringFromEventType(event.type);
+    kochavaEvent.nameString = event.name;
+    kochavaEvent.infoDictionary = event.customAttributes;
+    [kochavaEvent send];
+    
+    return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess forwardCount:0];
+}
+
+- (MPKitExecStatus *)routeCommerceEvent:(MPCommerceEvent *)commerceEvent {
+    KVAEvent *kochavaEvent = [KVAEvent eventWithType:KVAEventType.custom];
+    kochavaEvent.customEventNameString = NSStringFromEventType(commerceEvent.type);
+    NSMutableDictionary *info = [commerceEvent.customAttributes mutableCopy];
+    if (commerceEvent.transactionAttributes.revenue) {
+        info[@"RevenueAmount"] = commerceEvent.transactionAttributes.revenue;
+    }
+    if (commerceEvent.currency) {
+        info[@"CurrencyCode"] = commerceEvent.currency;
+    }
+    kochavaEvent.infoDictionary = [info copy];
+    [kochavaEvent send];
+    
+    return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess forwardCount:0];
+}
+
+- (MPKitExecStatus *)logScreen:(MPEvent *)event {
+    KVAEvent *kochavaEvent = [KVAEvent eventWithType:KVAEventType.custom];
+    kochavaEvent.customEventNameString = [NSString stringWithFormat:@"Viewed %@", event.name];
+    kochavaEvent.infoDictionary = event.customAttributes;
+    [kochavaEvent send];
+    
+    return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess forwardCount:0];
 }
 
 - (MPKitExecStatus *)setUserIdentity:(NSString *)identityString identityType:(MPUserIdentity)identityType {
