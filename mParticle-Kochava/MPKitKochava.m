@@ -2,7 +2,11 @@
 #import "MPKochavaSpatialCoordinate.h"
 #import "mParticle.h"
 #import "MPKitRegister.h"
+#if defined(__has_include) && __has_include(<KochavaTracker/KochavaTracker.h>)
+#import <KochavaTracker/KochavaTracker.h>
+#else
 #import "KochavaTracker.h"
+#endif
 
 NSString *const MPKitKochavaErrorKey = @"mParticle-Kochava Error";
 NSString *const MPKitKochavaErrorDomain = @"mParticle-Kochava";
