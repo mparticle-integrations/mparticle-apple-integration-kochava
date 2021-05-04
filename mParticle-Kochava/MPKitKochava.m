@@ -2,7 +2,11 @@
 #import "MPKochavaSpatialCoordinate.h"
 #import "mParticle.h"
 #import "MPKitRegister.h"
+#if defined(__has_include) && __has_include(<KochavaTracker/KochavaTracker.h>)
+#import <KochavaTracker/KochavaTracker.h>
+#else
 #import "KochavaTracker.h"
+#endif
 
 NSString *const MPKitKochavaErrorKey = @"mParticle-Kochava Error";
 NSString *const MPKitKochavaErrorDomain = @"mParticle-Kochava";
@@ -169,11 +173,11 @@ NSString *const kvWaitIntervalATT = @"waitIntervalATT";
     _started = YES;
     
     if (self.configuration[kvEnableATT]) {
-        KVATracker.shared.appTrackingTransparency.enabledBool = [self.configuration[kvEnableATT] boolValue] ? @YES : @NO;
+        KVATracker.shared.appTrackingTransparency.enabledBool = [self.configuration[kvEnableATT] boolValue] ? TRUE : FALSE;
     }
 
     if (self.configuration[kvEnableATTPrompt]) {
-        KVATracker.shared.appTrackingTransparency.autoRequestTrackingAuthorizationBool = [self.configuration[kvEnableATTPrompt] boolValue] ? @YES : @NO;
+        KVATracker.shared.appTrackingTransparency.autoRequestTrackingAuthorizationBool = [self.configuration[kvEnableATTPrompt] boolValue] ? TRUE : FALSE;
         if (self.configuration[kvWaitIntervalATT] && [self.configuration[kvEnableATTPrompt] boolValue]) {
             KVATracker.shared.appTrackingTransparency.authorizationStatusWaitTimeInterval = [self.configuration[kvWaitIntervalATT] integerValue];
         }
@@ -182,7 +186,7 @@ NSString *const kvWaitIntervalATT = @"waitIntervalATT";
     [KVATracker.shared startWithAppGUIDString:self.configuration[kvAppId]];
     
     if (self.configuration[kvLimitAdTracking]) {
-        KVATracker.shared.appLimitAdTrackingBool = [self.configuration[kvLimitAdTracking] boolValue] ? @YES : @NO;
+        KVATracker.shared.appLimitAdTrackingBool = [self.configuration[kvLimitAdTracking] boolValue] ? TRUE : FALSE;
     }
     
     if (self.configuration[kvEnableLogging]) {
