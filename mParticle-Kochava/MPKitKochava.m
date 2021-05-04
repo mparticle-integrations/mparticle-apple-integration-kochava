@@ -173,11 +173,11 @@ NSString *const kvWaitIntervalATT = @"waitIntervalATT";
     _started = YES;
     
     if (self.configuration[kvEnableATT]) {
-        KVATracker.shared.appTrackingTransparency.enabledBool = [self.configuration[kvEnableATT] boolValue] ? @YES : @NO;
+        KVATracker.shared.appTrackingTransparency.enabledBool = [self.configuration[kvEnableATT] boolValue] ? TRUE : FALSE;
     }
 
     if (self.configuration[kvEnableATTPrompt]) {
-        KVATracker.shared.appTrackingTransparency.autoRequestTrackingAuthorizationBool = [self.configuration[kvEnableATTPrompt] boolValue] ? @YES : @NO;
+        KVATracker.shared.appTrackingTransparency.autoRequestTrackingAuthorizationBool = [self.configuration[kvEnableATTPrompt] boolValue] ? TRUE : FALSE;
         if (self.configuration[kvWaitIntervalATT] && [self.configuration[kvEnableATTPrompt] boolValue]) {
             KVATracker.shared.appTrackingTransparency.authorizationStatusWaitTimeInterval = [self.configuration[kvWaitIntervalATT] integerValue];
         }
@@ -186,7 +186,7 @@ NSString *const kvWaitIntervalATT = @"waitIntervalATT";
     [KVATracker.shared startWithAppGUIDString:self.configuration[kvAppId]];
     
     if (self.configuration[kvLimitAdTracking]) {
-        KVATracker.shared.appLimitAdTrackingBool = [self.configuration[kvLimitAdTracking] boolValue] ? @YES : @NO;
+        KVATracker.shared.appLimitAdTrackingBool = [self.configuration[kvLimitAdTracking] boolValue] ? TRUE : FALSE;
     }
     
     if (self.configuration[kvEnableLogging]) {
