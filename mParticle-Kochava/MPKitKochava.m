@@ -7,7 +7,6 @@
 #import <KochavaTracker/KochavaTracker.h>
 #else
 #import "KochavaTracker.h"
-#import "KochavaAdNetwork.h"
 #endif
 #if defined(__has_include) && __has_include(<KochavaAdNetwork/KochavaAdNetwork.h>)
 #import <KochavaAdNetwork/KochavaAdNetwork.h>
