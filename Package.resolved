@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "KochavaCore",
+        "repositoryURL": "https://github.com/Kochava/Apple-SwiftPackage-KochavaCore",
+        "state": {
+          "branch": null,
+          "revision": "dd0b09040989fbb6c6d1b623eeea139eb05115b5",
+          "version": "4.6.1"
+        }
+      },
+      {
+        "package": "KochavaTracker",
+        "repositoryURL": "https://github.com/Kochava/Apple-SwiftPackage-KochavaTracker.git",
+        "state": {
+          "branch": null,
+          "revision": "d46ac1b108666a03e229a9a71b64303474736a3f",
+          "version": "4.6.1"
+        }
+      },
+      {
+        "package": "mParticle-Apple-SDK",
+        "repositoryURL": "https://github.com/mParticle/mparticle-apple-sdk",
+        "state": {
+          "branch": null,
+          "revision": "987c6e848bb6a93cba380ae742535d82e31153e5",
+          "version": "8.3.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

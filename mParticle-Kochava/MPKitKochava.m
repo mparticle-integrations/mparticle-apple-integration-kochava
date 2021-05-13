@@ -2,7 +2,7 @@
 #import "MPKochavaSpatialCoordinate.h"
 #import "mParticle.h"
 #import "MPKitRegister.h"
-#import "MPIConstants.h"
+#import "MPEnums.h"
 #if defined(__has_include) && __has_include(<KochavaTracker/KochavaTracker.h>)
 #import <KochavaTracker/KochavaTracker.h>
 #else
@@ -32,6 +32,31 @@ NSString *const kvEcommerce = @"eCommerce";
 NSString *const kvEnableATT = @"enableATT";
 NSString *const kvEnableATTPrompt = @"enableATTPrompt";
 NSString *const kvWaitIntervalATT = @"waitIntervalATT";
+
+// Event type strings
+NSString *const kMPEventTypeStringUnknown = @"Unknown";
+NSString *const kMPEventTypeStringNavigation = @"Navigation";
+NSString *const kMPEventTypeStringLocation = @"Location";
+NSString *const kMPEventTypeStringSearch = @"Search";
+NSString *const kMPEventTypeStringTransaction = @"Transaction";
+NSString *const kMPEventTypeStringUserContent = @"UserContent";
+NSString *const kMPEventTypeStringUserPreference = @"UserPreference";
+NSString *const kMPEventTypeStringSocial = @"Social";
+NSString *const kMPEventTypeStringOther = @"Other";
+NSString *const kMPEventTypeStringMedia = @"Media";
+NSString *const kMPEventTypeStringProductAddToCart = @"ProductAddToCart";
+NSString *const kMPEventTypeStringProductRemoveFromCart = @"ProductRemoveFromCart";
+NSString *const kMPEventTypeStringProductCheckout = @"ProductCheckout";
+NSString *const kMPEventTypeStringProductCheckoutOption = @"ProductCheckoutOption";
+NSString *const kMPEventTypeStringProductClick = @"ProductClick";
+NSString *const kMPEventTypeStringProductViewDetail = @"ProductViewDetail";
+NSString *const kMPEventTypeStringProductPurchase = @"ProductPurchase";
+NSString *const kMPEventTypeStringProductRefund = @"ProductRefund";
+NSString *const kMPEventTypeStringPromotionView = @"PromotionView";
+NSString *const kMPEventTypeStringPromotionClick = @"PromotionClick";
+NSString *const kMPEventTypeStringProductAddToWishlist = @"ProductAddToWishlist";
+NSString *const kMPEventTypeStringProductRemoveFromWishlist = @"ProductRemoveFromWishlist";
+NSString *const kMPEventTypeStringProductImpression = @"ProductImpression";
 
 @interface MPKitKochava()
 
@@ -262,6 +287,9 @@ NSString *const kvWaitIntervalATT = @"waitIntervalATT";
     KVAEvent *kochavaEvent = [KVAEvent eventWithType:KVAEventType.custom];
     kochavaEvent.customEventNameString = NSStringFromEventType(commerceEvent.type);
     NSMutableDictionary *info = [commerceEvent.customAttributes mutableCopy];
+    if (info == nil) {
+        info = [[NSMutableDictionary alloc] init];
+    }
     if (commerceEvent.transactionAttributes.revenue) {
         info[@"RevenueAmount"] = commerceEvent.transactionAttributes.revenue;
     }
