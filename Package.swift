@@ -20,11 +20,12 @@ let package = Package(
         .package(name: "KochavaCore",
                  url: "https://github.com/Kochava/Apple-SwiftPackage-KochavaCore", .upToNextMajor(from: "4.0.0")),
         .package(name: "KochavaTracker", url: "https://github.com/Kochava/Apple-SwiftPackage-KochavaTracker.git", .upToNextMajor(from: "4.0.0")),
+        .package(name: "KochavaAdNetwork", url: "https://github.com/Kochava/Apple-SwiftPackage-KochavaAdNetwork.git", .upToNextMajor(from: "4.0.0")),
     ],
     targets: [
         .target(
             name: "mParticle-Kochava",
-            dependencies: ["mParticle-Apple-SDK", "KochavaCore", "KochavaTracker"],
+            dependencies: ["mParticle-Apple-SDK", "KochavaCore", "KochavaTracker", "KochavaAdNetwork"],
             path: "mParticle-Kochava"),
     ]
 )

@@ -34,29 +34,58 @@ NSString *const kvEnableATTPrompt = @"enableATTPrompt";
 NSString *const kvWaitIntervalATT = @"waitIntervalATT";
 
 // Event type strings
-NSString *const kMPEventTypeStringUnknown = @"Unknown";
-NSString *const kMPEventTypeStringNavigation = @"Navigation";
-NSString *const kMPEventTypeStringLocation = @"Location";
-NSString *const kMPEventTypeStringSearch = @"Search";
-NSString *const kMPEventTypeStringTransaction = @"Transaction";
-NSString *const kMPEventTypeStringUserContent = @"UserContent";
-NSString *const kMPEventTypeStringUserPreference = @"UserPreference";
-NSString *const kMPEventTypeStringSocial = @"Social";
-NSString *const kMPEventTypeStringOther = @"Other";
-NSString *const kMPEventTypeStringMedia = @"Media";
-NSString *const kMPEventTypeStringProductAddToCart = @"ProductAddToCart";
-NSString *const kMPEventTypeStringProductRemoveFromCart = @"ProductRemoveFromCart";
-NSString *const kMPEventTypeStringProductCheckout = @"ProductCheckout";
-NSString *const kMPEventTypeStringProductCheckoutOption = @"ProductCheckoutOption";
-NSString *const kMPEventTypeStringProductClick = @"ProductClick";
-NSString *const kMPEventTypeStringProductViewDetail = @"ProductViewDetail";
-NSString *const kMPEventTypeStringProductPurchase = @"ProductPurchase";
-NSString *const kMPEventTypeStringProductRefund = @"ProductRefund";
-NSString *const kMPEventTypeStringPromotionView = @"PromotionView";
-NSString *const kMPEventTypeStringPromotionClick = @"PromotionClick";
-NSString *const kMPEventTypeStringProductAddToWishlist = @"ProductAddToWishlist";
-NSString *const kMPEventTypeStringProductRemoveFromWishlist = @"ProductRemoveFromWishlist";
-NSString *const kMPEventTypeStringProductImpression = @"ProductImpression";
+NSString *const kvEventTypeStringUnknown = @"Unknown";
+NSString *const kvEventTypeStringNavigation = @"Navigation";
+NSString *const kvEventTypeStringLocation = @"Location";
+NSString *const kvEventTypeStringSearch = @"Search";
+NSString *const kvEventTypeStringTransaction = @"Transaction";
+NSString *const kvEventTypeStringUserContent = @"UserContent";
+NSString *const kvEventTypeStringUserPreference = @"UserPreference";
+NSString *const kvEventTypeStringSocial = @"Social";
+NSString *const kvEventTypeStringOther = @"Other";
+NSString *const kvEventTypeStringMedia = @"Media";
+NSString *const kvEventTypeStringProductAddToCart = @"ProductAddToCart";
+NSString *const kvEventTypeStringProductRemoveFromCart = @"ProductRemoveFromCart";
+NSString *const kvEventTypeStringProductCheckout = @"ProductCheckout";
+NSString *const kvEventTypeStringProductCheckoutOption = @"ProductCheckoutOption";
+NSString *const kvEventTypeStringProductClick = @"ProductClick";
+NSString *const kvEventTypeStringProductViewDetail = @"ProductViewDetail";
+NSString *const kvEventTypeStringProductPurchase = @"ProductPurchase";
+NSString *const kvEventTypeStringProductRefund = @"ProductRefund";
+NSString *const kvEventTypeStringPromotionView = @"PromotionView";
+NSString *const kvEventTypeStringPromotionClick = @"PromotionClick";
+NSString *const kvEventTypeStringProductAddToWishlist = @"ProductAddToWishlist";
+NSString *const kvEventTypeStringProductRemoveFromWishlist = @"ProductRemoveFromWishlist";
+NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
+
+#define KVNSStringFromEventType( value ) \
+( \
+@{ \
+@( MPEventTypeNavigation )          : kvEventTypeStringNavigation, \
+@( MPEventTypeLocation )            : kvEventTypeStringLocation, \
+@( MPEventTypeSearch )              : kvEventTypeStringSearch, \
+@( MPEventTypeTransaction )         : kvEventTypeStringTransaction, \
+@( MPEventTypeUserContent )         : kvEventTypeStringUserContent, \
+@( MPEventTypeUserPreference )      : kvEventTypeStringUserPreference, \
+@( MPEventTypeSocial )              : kvEventTypeStringSocial, \
+@( MPEventTypeOther )               : kvEventTypeStringOther, \
+@( MPEventTypeAddToCart )           : kvEventTypeStringProductAddToCart, \
+@( MPEventTypeRemoveFromCart )      : kvEventTypeStringProductRemoveFromCart, \
+@( MPEventTypeCheckout )            : kvEventTypeStringProductCheckout, \
+@( MPEventTypeCheckoutOption )      : kvEventTypeStringProductCheckoutOption, \
+@( MPEventTypeClick )               : kvEventTypeStringProductClick, \
+@( MPEventTypeViewDetail )          : kvEventTypeStringProductViewDetail, \
+@( MPEventTypePurchase )            : kvEventTypeStringProductPurchase, \
+@( MPEventTypeRefund )              : kvEventTypeStringProductRefund, \
+@( MPEventTypePromotionView )       : kvEventTypeStringPromotionView, \
+@( MPEventTypePromotionClick )      : kvEventTypeStringPromotionClick, \
+@( MPEventTypeAddToWishlist )       : kvEventTypeStringProductAddToWishlist, \
+@( MPEventTypeRemoveFromWishlist )  : kvEventTypeStringProductRemoveFromWishlist, \
+@( MPEventTypeImpression )          : kvEventTypeStringProductImpression, \
+@( MPEventTypeMedia )               : kvEventTypeStringMedia, \
+} \
+[ @( value ) ] \
+)
 
 @interface MPKitKochava()
 
@@ -275,7 +304,7 @@ NSString *const kMPEventTypeStringProductImpression = @"ProductImpression";
 
 - (MPKitExecStatus *)routeEvent:(MPEvent *)event {
     KVAEvent *kochavaEvent = [KVAEvent eventWithType:KVAEventType.custom];
-    kochavaEvent.customEventNameString = NSStringFromEventType(event.type);
+    kochavaEvent.customEventNameString = KVNSStringFromEventType(event.type);
     kochavaEvent.nameString = event.name;
     kochavaEvent.infoDictionary = event.customAttributes;
     [kochavaEvent send];
@@ -285,7 +314,7 @@ NSString *const kMPEventTypeStringProductImpression = @"ProductImpression";
 
 - (MPKitExecStatus *)routeCommerceEvent:(MPCommerceEvent *)commerceEvent {
     KVAEvent *kochavaEvent = [KVAEvent eventWithType:KVAEventType.custom];
-    kochavaEvent.customEventNameString = NSStringFromEventType(commerceEvent.type);
+    kochavaEvent.customEventNameString = KVNSStringFromEventType(commerceEvent.type);
     NSMutableDictionary *info = [commerceEvent.customAttributes mutableCopy];
     if (info == nil) {
         info = [[NSMutableDictionary alloc] init];
