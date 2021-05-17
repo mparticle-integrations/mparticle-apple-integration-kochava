@@ -2,10 +2,16 @@
 #import "MPKochavaSpatialCoordinate.h"
 #import "mParticle.h"
 #import "MPKitRegister.h"
+#import "MPEnums.h"
 #if defined(__has_include) && __has_include(<KochavaTracker/KochavaTracker.h>)
 #import <KochavaTracker/KochavaTracker.h>
 #else
 #import "KochavaTracker.h"
+#endif
+#if defined(__has_include) && __has_include(<KochavaAdNetwork/KochavaAdNetwork.h>)
+#import <KochavaAdNetwork/KochavaAdNetwork.h>
+#else
+#import "KochavaAdNetwork.h"
 #endif
 
 NSString *const MPKitKochavaErrorKey = @"mParticle-Kochava Error";
@@ -26,6 +32,60 @@ NSString *const kvEcommerce = @"eCommerce";
 NSString *const kvEnableATT = @"enableATT";
 NSString *const kvEnableATTPrompt = @"enableATTPrompt";
 NSString *const kvWaitIntervalATT = @"waitIntervalATT";
+
+// Event type strings
+NSString *const kvEventTypeStringUnknown = @"Unknown";
+NSString *const kvEventTypeStringNavigation = @"Navigation";
+NSString *const kvEventTypeStringLocation = @"Location";
+NSString *const kvEventTypeStringSearch = @"Search";
+NSString *const kvEventTypeStringTransaction = @"Transaction";
+NSString *const kvEventTypeStringUserContent = @"UserContent";
+NSString *const kvEventTypeStringUserPreference = @"UserPreference";
+NSString *const kvEventTypeStringSocial = @"Social";
+NSString *const kvEventTypeStringOther = @"Other";
+NSString *const kvEventTypeStringMedia = @"Media";
+NSString *const kvEventTypeStringProductAddToCart = @"ProductAddToCart";
+NSString *const kvEventTypeStringProductRemoveFromCart = @"ProductRemoveFromCart";
+NSString *const kvEventTypeStringProductCheckout = @"ProductCheckout";
+NSString *const kvEventTypeStringProductCheckoutOption = @"ProductCheckoutOption";
+NSString *const kvEventTypeStringProductClick = @"ProductClick";
+NSString *const kvEventTypeStringProductViewDetail = @"ProductViewDetail";
+NSString *const kvEventTypeStringProductPurchase = @"ProductPurchase";
+NSString *const kvEventTypeStringProductRefund = @"ProductRefund";
+NSString *const kvEventTypeStringPromotionView = @"PromotionView";
+NSString *const kvEventTypeStringPromotionClick = @"PromotionClick";
+NSString *const kvEventTypeStringProductAddToWishlist = @"ProductAddToWishlist";
+NSString *const kvEventTypeStringProductRemoveFromWishlist = @"ProductRemoveFromWishlist";
+NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
+
+#define KVNSStringFromEventType( value ) \
+( \
+@{ \
+@( MPEventTypeNavigation )          : kvEventTypeStringNavigation, \
+@( MPEventTypeLocation )            : kvEventTypeStringLocation, \
+@( MPEventTypeSearch )              : kvEventTypeStringSearch, \
+@( MPEventTypeTransaction )         : kvEventTypeStringTransaction, \
+@( MPEventTypeUserContent )         : kvEventTypeStringUserContent, \
+@( MPEventTypeUserPreference )      : kvEventTypeStringUserPreference, \
+@( MPEventTypeSocial )              : kvEventTypeStringSocial, \
+@( MPEventTypeOther )               : kvEventTypeStringOther, \
+@( MPEventTypeAddToCart )           : kvEventTypeStringProductAddToCart, \
+@( MPEventTypeRemoveFromCart )      : kvEventTypeStringProductRemoveFromCart, \
+@( MPEventTypeCheckout )            : kvEventTypeStringProductCheckout, \
+@( MPEventTypeCheckoutOption )      : kvEventTypeStringProductCheckoutOption, \
+@( MPEventTypeClick )               : kvEventTypeStringProductClick, \
+@( MPEventTypeViewDetail )          : kvEventTypeStringProductViewDetail, \
+@( MPEventTypePurchase )            : kvEventTypeStringProductPurchase, \
+@( MPEventTypeRefund )              : kvEventTypeStringProductRefund, \
+@( MPEventTypePromotionView )       : kvEventTypeStringPromotionView, \
+@( MPEventTypePromotionClick )      : kvEventTypeStringPromotionClick, \
+@( MPEventTypeAddToWishlist )       : kvEventTypeStringProductAddToWishlist, \
+@( MPEventTypeRemoveFromWishlist )  : kvEventTypeStringProductRemoveFromWishlist, \
+@( MPEventTypeImpression )          : kvEventTypeStringProductImpression, \
+@( MPEventTypeMedia )               : kvEventTypeStringMedia, \
+} \
+[ @( value ) ] \
+)
 
 @interface MPKitKochava()
 
@@ -182,9 +242,11 @@ NSString *const kvWaitIntervalATT = @"waitIntervalATT";
             KVATracker.shared.appTrackingTransparency.authorizationStatusWaitTimeInterval = [self.configuration[kvWaitIntervalATT] integerValue];
         }
     }
+    
+    [KVAAdNetworkProduct.shared register];
 
     [KVATracker.shared startWithAppGUIDString:self.configuration[kvAppId]];
-    
+        
     if (self.configuration[kvLimitAdTracking]) {
         KVATracker.shared.appLimitAdTrackingBool = [self.configuration[kvLimitAdTracking] boolValue] ? TRUE : FALSE;
     }
@@ -228,6 +290,54 @@ NSString *const kvWaitIntervalATT = @"waitIntervalATT";
     
     MPKitExecStatus *execStatus = [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
     return execStatus;
+}
+
+- (nonnull MPKitExecStatus *)logBaseEvent:(nonnull MPBaseEvent *)event {
+    if ([event isKindOfClass:[MPEvent class]]) {
+        return [self routeEvent:(MPEvent *)event];
+    } else if ([event isKindOfClass:[MPCommerceEvent class]]) {
+        return [self routeCommerceEvent:(MPCommerceEvent *)event];
+    } else {
+        return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeUnavailable];
+    }
+}
+
+- (MPKitExecStatus *)routeEvent:(MPEvent *)event {
+    KVAEvent *kochavaEvent = [KVAEvent eventWithType:KVAEventType.custom];
+    kochavaEvent.customEventNameString = KVNSStringFromEventType(event.type);
+    kochavaEvent.nameString = event.name;
+    kochavaEvent.infoDictionary = event.customAttributes;
+    [kochavaEvent send];
+    
+    return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess forwardCount:0];
+}
+
+- (MPKitExecStatus *)routeCommerceEvent:(MPCommerceEvent *)commerceEvent {
+    KVAEvent *kochavaEvent = [KVAEvent eventWithType:KVAEventType.custom];
+    kochavaEvent.customEventNameString = KVNSStringFromEventType(commerceEvent.type);
+    NSMutableDictionary *info = [commerceEvent.customAttributes mutableCopy];
+    if (info == nil) {
+        info = [[NSMutableDictionary alloc] init];
+    }
+    if (commerceEvent.transactionAttributes.revenue) {
+        info[@"RevenueAmount"] = commerceEvent.transactionAttributes.revenue;
+    }
+    if (commerceEvent.currency) {
+        info[@"CurrencyCode"] = commerceEvent.currency;
+    }
+    kochavaEvent.infoDictionary = [info copy];
+    [kochavaEvent send];
+    
+    return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess forwardCount:0];
+}
+
+- (MPKitExecStatus *)logScreen:(MPEvent *)event {
+    KVAEvent *kochavaEvent = [KVAEvent eventWithType:KVAEventType.custom];
+    kochavaEvent.customEventNameString = [NSString stringWithFormat:@"Viewed %@", event.name];
+    kochavaEvent.infoDictionary = event.customAttributes;
+    [kochavaEvent send];
+    
+    return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess forwardCount:0];
 }
 
 - (MPKitExecStatus *)setUserIdentity:(NSString *)identityString identityType:(MPUserIdentity)identityType {
