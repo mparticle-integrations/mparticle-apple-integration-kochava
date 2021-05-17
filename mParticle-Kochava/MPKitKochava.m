@@ -309,7 +309,7 @@ NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
     kochavaEvent.infoDictionary = event.customAttributes;
     [kochavaEvent send];
     
-    return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess forwardCount:0];
+    return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
 }
 
 - (MPKitExecStatus *)routeCommerceEvent:(MPCommerceEvent *)commerceEvent {
@@ -328,7 +328,7 @@ NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
     kochavaEvent.infoDictionary = [info copy];
     [kochavaEvent send];
     
-    return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess forwardCount:0];
+    return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
 }
 
 - (MPKitExecStatus *)logScreen:(MPEvent *)event {
@@ -337,7 +337,7 @@ NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
     kochavaEvent.infoDictionary = event.customAttributes;
     [kochavaEvent send];
     
-    return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess forwardCount:0];
+    return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
 }
 
 - (MPKitExecStatus *)setUserIdentity:(NSString *)identityString identityType:(MPUserIdentity)identityType {
