@@ -194,13 +194,13 @@ NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
 
 - (void)retrieveAttributionWithCompletionHandler:(void(^)(NSDictionary *attribution))completionHandler {
     [KVATracker.shared.attribution retrieveResultWithCompletionHandler:^(KVAAttributionResult * _Nonnull attributionResult)
-    {
+     {
         if (!attributionResult.rawDictionary) {
-                [self->_kitApi onAttributionCompleteWithResult:nil error:[self errorWithMessage:@"Received nil attributionData from Kochava"]];
+            [self->_kitApi onAttributionCompleteWithResult:nil error:[self errorWithMessage:@"Received nil attributionData from Kochava"]];
         } else {
             MPAttributionResult *mParticleResult = [[MPAttributionResult alloc] init];
             mParticleResult.linkInfo = attributionResult.rawDictionary;
-
+            
             [self->_kitApi onAttributionCompleteWithResult:mParticleResult error:nil];
         }
         
@@ -230,12 +230,16 @@ NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
     }
     
     _configuration = configuration;
-    _started = YES;
     
+    execStatus = [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
+    return execStatus;
+}
+
+- (void)start {
     if (self.configuration[kvEnableATT]) {
         KVATracker.shared.appTrackingTransparency.enabledBool = [self.configuration[kvEnableATT] boolValue] ? TRUE : FALSE;
     }
-
+    
     if (self.configuration[kvEnableATTPrompt]) {
         KVATracker.shared.appTrackingTransparency.autoRequestTrackingAuthorizationBool = [self.configuration[kvEnableATTPrompt] boolValue] ? TRUE : FALSE;
         if (self.configuration[kvWaitIntervalATT] && [self.configuration[kvEnableATTPrompt] boolValue]) {
@@ -244,9 +248,9 @@ NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
     }
     
     [KVAAdNetworkProduct.shared register];
-
+    
     [KVATracker.shared startWithAppGUIDString:self.configuration[kvAppId]];
-        
+    
     if (self.configuration[kvLimitAdTracking]) {
         KVATracker.shared.appLimitAdTrackingBool = [self.configuration[kvLimitAdTracking] boolValue] ? TRUE : FALSE;
     }
@@ -255,9 +259,39 @@ NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
         KVALog.shared.level = [self.configuration[kvEnableLogging] boolValue] ? KVALogLevel.debug : KVALogLevel.never;
     }
     
-    if ([configuration[kvUseCustomerId] boolValue] || [configuration[kvIncludeOtherUserIds] boolValue]) {
+    if ([self.configuration[kvUseCustomerId] boolValue] || [self.configuration[kvIncludeOtherUserIds] boolValue]) {
         [self synchronize];
     }
+    
+    NSDictionary *userActivityDictionary = self.launchOptions[UIApplicationLaunchOptionsUserActivityDictionaryKey];
+    if (userActivityDictionary == nil)
+    {
+        [KVADeeplink processWithURL:nil completionHandler:^(KVADeeplink * _Nonnull deeplink)
+         {
+            if (!deeplink) {
+                [self->_kitApi onAttributionCompleteWithResult:nil error:[self errorWithMessage:@"Received nil deeplink from Kochava"]];
+                return;
+            }
+            
+            NSMutableDictionary *innerDictionary = [NSMutableDictionary dictionary];
+            if (deeplink.destinationString) {
+                innerDictionary[MPKitKochavaEnhancedDeeplinkDestinationKey] = deeplink.destinationString;
+            }
+            if (deeplink.rawDictionary) {
+                innerDictionary[MPKitKochavaEnhancedDeeplinkRawKey] = deeplink.rawDictionary;
+            }
+            
+            NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+            dictionary[MPKitKochavaEnhancedDeeplinkKey] = [innerDictionary copy];
+            
+            MPAttributionResult *attributionResult = [[MPAttributionResult alloc] init];
+            attributionResult.linkInfo = [dictionary copy];
+            
+            [self->_kitApi onAttributionCompleteWithResult:attributionResult error:nil];
+        }];
+    }
+    
+    self->_started = YES;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         NSDictionary *userInfo = @{mParticleKitInstanceKey:[[self class] kitCode]};
@@ -268,9 +302,6 @@ NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
     });
     
     [self retrieveAttributionWithCompletionHandler:nil];
-    
-    execStatus = [[MPKitExecStatus alloc] initWithSDKCode:[[self class] kitCode] returnCode:MPKitReturnCodeSuccess];
-    return execStatus;
 }
 
 - (id const)providerKitInstance {
@@ -402,7 +433,7 @@ NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
 
 - (MPKitExecStatus *)setATTStatus:(MPATTAuthorizationStatus)status withATTStatusTimestampMillis:(NSNumber *)attStatusTimestampMillis  API_AVAILABLE(ios(14)){
     KVATracker.shared.appTrackingTransparency.enabledBool = YES;
-
+    
     return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
 }
 

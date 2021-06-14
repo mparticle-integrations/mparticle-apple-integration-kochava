@@ -14,6 +14,7 @@ extern NSString * _Nonnull const MPKitKochavaEnhancedDeeplinkRawKey;
 @interface MPKitKochava : NSObject <MPKitProtocol>
 
 @property (nonatomic, strong, nonnull) NSDictionary *configuration;
+@property (nonatomic, strong, nullable) NSDictionary *launchOptions;
 @property (nonatomic, unsafe_unretained, readonly) BOOL started;
 @property (nonatomic, strong, nullable) MPKitAPI *kitApi;
 
