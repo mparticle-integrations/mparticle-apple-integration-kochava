@@ -268,7 +268,8 @@ NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
     {
         [KVADeeplink processWithURL:nil completionHandler:^(KVADeeplink * _Nonnull deeplink)
          {
-            if (!deeplink) {
+            NSString *destinationString = deeplink.destinationString;
+            if (destinationString.length == 0) {
                 [self->_kitApi onAttributionCompleteWithResult:nil error:[self errorWithMessage:@"Received nil deeplink from Kochava"]];
                 return;
             }
@@ -407,7 +408,8 @@ NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
     NSURL *url = userActivity.webpageURL;
     
     [KVADeeplink processWithURL:url completionHandler:^(KVADeeplink * _Nonnull deeplink) {
-        if (!deeplink) {
+        NSString *destinationString = deeplink.destinationString;
+        if (destinationString.length == 0) {
             [self->_kitApi onAttributionCompleteWithResult:nil error:[self errorWithMessage:@"Received nil deeplink from Kochava"]];
             return;
         }
