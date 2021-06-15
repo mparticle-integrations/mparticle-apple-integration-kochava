@@ -275,9 +275,8 @@ NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
             }
             
             NSMutableDictionary *innerDictionary = [NSMutableDictionary dictionary];
-            if (deeplink.destinationString) {
-                innerDictionary[MPKitKochavaEnhancedDeeplinkDestinationKey] = deeplink.destinationString;
-            }
+            innerDictionary[MPKitKochavaEnhancedDeeplinkDestinationKey] = destinationString;
+
             if (deeplink.rawDictionary) {
                 innerDictionary[MPKitKochavaEnhancedDeeplinkRawKey] = deeplink.rawDictionary;
             }
@@ -415,9 +414,8 @@ NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
         }
         
         NSMutableDictionary *innerDictionary = [NSMutableDictionary dictionary];
-        if (deeplink.destinationString) {
-            innerDictionary[MPKitKochavaEnhancedDeeplinkDestinationKey] = deeplink.destinationString;
-        }
+        innerDictionary[MPKitKochavaEnhancedDeeplinkDestinationKey] = destinationString;
+
         if (deeplink.rawDictionary) {
             innerDictionary[MPKitKochavaEnhancedDeeplinkRawKey] = deeplink.rawDictionary;
         }
