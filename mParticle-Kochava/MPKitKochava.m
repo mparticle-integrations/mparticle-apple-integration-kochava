@@ -34,29 +34,31 @@ NSString *const kvEnableATTPrompt = @"enableATTPrompt";
 NSString *const kvWaitIntervalATT = @"waitIntervalATT";
 
 // Event type strings
-NSString *const kvEventTypeStringUnknown = @"Unknown";
-NSString *const kvEventTypeStringNavigation = @"Navigation";
-NSString *const kvEventTypeStringLocation = @"Location";
-NSString *const kvEventTypeStringSearch = @"Search";
-NSString *const kvEventTypeStringTransaction = @"Transaction";
-NSString *const kvEventTypeStringUserContent = @"UserContent";
-NSString *const kvEventTypeStringUserPreference = @"UserPreference";
-NSString *const kvEventTypeStringSocial = @"Social";
-NSString *const kvEventTypeStringOther = @"Other";
-NSString *const kvEventTypeStringMedia = @"Media";
-NSString *const kvEventTypeStringProductAddToCart = @"ProductAddToCart";
-NSString *const kvEventTypeStringProductRemoveFromCart = @"ProductRemoveFromCart";
-NSString *const kvEventTypeStringProductCheckout = @"ProductCheckout";
-NSString *const kvEventTypeStringProductCheckoutOption = @"ProductCheckoutOption";
-NSString *const kvEventTypeStringProductClick = @"ProductClick";
-NSString *const kvEventTypeStringProductViewDetail = @"ProductViewDetail";
-NSString *const kvEventTypeStringProductPurchase = @"ProductPurchase";
-NSString *const kvEventTypeStringProductRefund = @"ProductRefund";
-NSString *const kvEventTypeStringPromotionView = @"PromotionView";
-NSString *const kvEventTypeStringPromotionClick = @"PromotionClick";
-NSString *const kvEventTypeStringProductAddToWishlist = @"ProductAddToWishlist";
-NSString *const kvEventTypeStringProductRemoveFromWishlist = @"ProductRemoveFromWishlist";
-NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
+NSString *const kvEventTypeStringUnknown = @"unknown";
+NSString *const kvEventTypeStringNavigation = @"navigation";
+NSString *const kvEventTypeStringLocation = @"location";
+NSString *const kvEventTypeStringSearch = @"search";
+NSString *const kvEventTypeStringTransaction = @"transaction";
+NSString *const kvEventTypeStringUserContent = @"user_content";
+NSString *const kvEventTypeStringUserPreference = @"user_preference";
+NSString *const kvEventTypeStringSocial = @"social";
+NSString *const kvEventTypeStringOther = @"other";
+NSString *const kvEventTypeStringProductImpression = @"product_impression";
+NSString *const kvEventTypeStringMedia = @"media";
+
+NSString *const kvEventTypeStringProductAddToCart = @"add_to_cart";
+NSString *const kvEventTypeStringProductRemoveFromCart = @"remove_from_cart";
+NSString *const kvEventTypeStringProductAddToWishlist = @"add_to_wishlist";
+NSString *const kvEventTypeStringProductRemoveFromWishlist = @"remove_from_wishlist";
+NSString *const kvEventTypeStringProductCheckout = @"checkout";
+NSString *const kvEventTypeStringProductCheckoutOption = @"checkout_option";
+NSString *const kvEventTypeStringProductClick = @"click";
+NSString *const kvEventTypeStringProductViewDetail = @"view_detail";
+NSString *const kvEventTypeStringProductPurchase = @"purchase";
+NSString *const kvEventTypeStringProductRefund = @"refund";
+
+NSString *const kvEventTypeStringPromotionView = @"view";
+NSString *const kvEventTypeStringPromotionClick = @"click";
 
 #define KVNSStringFromEventType( value ) \
 ( \
@@ -83,6 +85,32 @@ NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
 @( MPEventTypeRemoveFromWishlist )  : kvEventTypeStringProductRemoveFromWishlist, \
 @( MPEventTypeImpression )          : kvEventTypeStringProductImpression, \
 @( MPEventTypeMedia )               : kvEventTypeStringMedia, \
+} \
+[ @( value ) ] \
+)
+
+#define KVNSStringFromProductAction( value ) \
+( \
+@{ \
+@( MPCommerceEventActionAddToCart )             : kvEventTypeStringProductAddToCart, \
+@( MPCommerceEventActionRemoveFromCart )        : kvEventTypeStringProductRemoveFromCart, \
+@( MPCommerceEventActionAddToWishList )         : kvEventTypeStringProductAddToWishlist, \
+@( MPCommerceEventActionRemoveFromWishlist )    : kvEventTypeStringProductRemoveFromWishlist, \
+@( MPCommerceEventActionCheckout )              : kvEventTypeStringProductCheckout, \
+@( MPCommerceEventActionCheckoutOptions )       : kvEventTypeStringProductCheckoutOption, \
+@( MPCommerceEventActionClick )                 : kvEventTypeStringProductClick, \
+@( MPCommerceEventActionViewDetail )            : kvEventTypeStringProductViewDetail, \
+@( MPCommerceEventActionPurchase )              : kvEventTypeStringProductPurchase, \
+@( MPCommerceEventActionRefund )                : kvEventTypeStringProductRefund, \
+} \
+[ @( value ) ] \
+)
+
+#define KVNSStringFromPromotionAction( value ) \
+( \
+@{ \
+@( MPPromotionActionClick ) : kvEventTypeStringPromotionView, \
+@( MPPromotionActionView )  : kvEventTypeStringPromotionClick, \
 } \
 [ @( value ) ] \
 )
@@ -335,8 +363,7 @@ NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
 
 - (MPKitExecStatus *)routeEvent:(MPEvent *)event {
     KVAEvent *kochavaEvent = [KVAEvent eventWithType:KVAEventType.custom];
-    kochavaEvent.customEventNameString = KVNSStringFromEventType(event.type);
-    kochavaEvent.nameString = event.name;
+    kochavaEvent.customEventNameString = [NSString stringWithFormat:@"%@ - %@", KVNSStringFromEventType(event.type), event.name];
     kochavaEvent.infoDictionary = event.customAttributes;
     [kochavaEvent send];
     
@@ -345,16 +372,49 @@ NSString *const kvEventTypeStringProductImpression = @"ProductImpression";
 
 - (MPKitExecStatus *)routeCommerceEvent:(MPCommerceEvent *)commerceEvent {
     KVAEvent *kochavaEvent = [KVAEvent eventWithType:KVAEventType.custom];
-    kochavaEvent.customEventNameString = KVNSStringFromEventType(commerceEvent.type);
+    NSString *eventName;
+    if (commerceEvent.promotionContainer) {
+        eventName = [NSString stringWithFormat:@"eCommerce - %@", KVNSStringFromPromotionAction(commerceEvent.promotionContainer.action)];
+    } else if (commerceEvent.impressions) {
+        eventName = @"eCommerce - Impression";
+    } else {
+        eventName = [NSString stringWithFormat:@"eCommerce - %@", KVNSStringFromProductAction(commerceEvent.action)];
+    }
+    kochavaEvent.customEventNameString = eventName;
     NSMutableDictionary *info = [commerceEvent.customAttributes mutableCopy];
     if (info == nil) {
         info = [[NSMutableDictionary alloc] init];
     }
     if (commerceEvent.transactionAttributes.revenue) {
-        info[@"RevenueAmount"] = commerceEvent.transactionAttributes.revenue;
+        info[@"revenue"] = commerceEvent.transactionAttributes.revenue;
     }
     if (commerceEvent.currency) {
-        info[@"CurrencyCode"] = commerceEvent.currency;
+        info[@"currency"] = commerceEvent.currency;
+    }
+    if (commerceEvent.products) {
+        NSMutableArray *productArray = [[NSMutableArray alloc] init];
+        for (MPProduct *product in commerceEvent.products) {
+            [productArray addObject:product.dictionaryRepresentation];
+        }
+        info[@"products"] = productArray;
+    }
+    if (commerceEvent.impressions) {
+        NSMutableDictionary *impressionDictionary = [[NSMutableDictionary alloc] init];
+        [commerceEvent.impressions enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSMutableSet *products, BOOL *stop) {
+            NSMutableArray *productArray = [[NSMutableArray alloc] init];
+            for (MPProduct *product in commerceEvent.products) {
+                [productArray addObject:product.dictionaryRepresentation];
+            }
+            impressionDictionary[key] = productArray;
+        }];
+        info[@"impression"] = impressionDictionary;
+    }
+    if (commerceEvent.promotionContainer) {
+        NSMutableArray *promotionArray = [[NSMutableArray alloc] init];
+        for (MPProduct *promotion in commerceEvent.promotionContainer.promotions) {
+            [promotionArray addObject:promotion.dictionaryRepresentation];
+        }
+        info[@"promotions"] = promotionArray;
     }
     kochavaEvent.infoDictionary = [info copy];
     [kochavaEvent send];
