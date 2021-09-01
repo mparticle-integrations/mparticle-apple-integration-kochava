@@ -363,7 +363,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
 
 - (MPKitExecStatus *)routeEvent:(MPEvent *)event {
     KVAEvent *kochavaEvent = [KVAEvent eventWithType:KVAEventType.custom];
-    kochavaEvent.customEventNameString = [NSString stringWithFormat:@"%@ - %@", KVNSStringFromEventType(event.type), event.name];
+    kochavaEvent.customEventNameString = event.name;
     kochavaEvent.infoDictionary = event.customAttributes;
     [kochavaEvent send];
     
