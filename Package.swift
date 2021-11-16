@@ -26,6 +26,7 @@ let package = Package(
         .target(
             name: "mParticle-Kochava",
             dependencies: ["mParticle-Apple-SDK", "KochavaCore", "KochavaTracker", "KochavaAdNetwork"],
-            path: "mParticle-Kochava"),
+            path: "mParticle-Kochava",
+            publicHeadersPath: "."),
     ]
 )
