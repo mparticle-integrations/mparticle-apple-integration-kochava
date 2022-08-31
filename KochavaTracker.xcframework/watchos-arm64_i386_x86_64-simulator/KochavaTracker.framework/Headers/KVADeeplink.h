@@ -17,6 +17,7 @@
 
 
 
+#pragma mark KochavaCore
 #ifdef KOCHAVA_FRAMEWORK
 #import <KochavaCore/KochavaCore.h>
 #else
@@ -111,14 +112,14 @@ typedef void (^ KVADeeplinkProcessCompletionHandler) (KVADeeplink * _Nonnull dee
 
 
 /*!
-@method + processWithURL:completionHandler:
+ @method + processWithURL:completionHandler:
 
-@brief A method which processes a deep link.
+ @brief A method which processes a deep link.
 
-@param url The deep link url as provided.
+ @param url The deep link url as provided.
 
-@param completionHandler A block to be called when processing is complete.
-*/
+ @param completionHandler A block to be called when processing is complete.
+ */
 + (void)processWithURL:(nullable NSURL *)url completionHandler:(nullable KVADeeplinkProcessCompletionHandler)completionHandler NS_SWIFT_NAME(process(withURL:completionHandler:));
 
 
@@ -140,16 +141,16 @@ typedef void (^ KVADeeplinkProcessCompletionHandler) (KVADeeplink * _Nonnull dee
 
 
 /*!
-@method + processWithURL:processor:completionHandler:
+ @method + processWithURL:processor:completionHandler:
 
-@brief A method which processes a deep link.
+ @brief A method which processes a deep link.
 
-@param url The deep link url as provided.
+ @param url The deep link url as provided.
 
-@param processor An array of KVADeeplinksProcessorProvider to which to add the token.
+ @param processor An array of KVADeeplinksProcessorProvider to which to add the token.
 
-@param completionHandler A block to be called when processing is complete.
-*/
+ @param completionHandler A block to be called when processing is complete.
+ */
 + (void)processWithURL:(nullable NSURL *)url processor:(nullable id<KVADeeplinksProcessorProvider>)processor completionHandler:(nullable KVADeeplinkProcessCompletionHandler)completionHandler NS_SWIFT_NAME(process(withURL:processor:completionHandler:));
 
 

@@ -17,22 +17,30 @@
 
 
 
+#pragma mark System
+#import <Foundation/Foundation.h>  // for #if conditionals.  TARGET_OS_*
 #if TARGET_OS_TV
 #import <JavaScriptCore/JavaScriptCore.h>
 #endif
 
+#pragma mark KochavaCore
 #ifdef KOCHAVA_FRAMEWORK
 #import <KochavaCore/KochavaCore.h>
 #else
-#import <Foundation/Foundation.h>  // for #if conditionals.  TARGET_OS_*
 #import "KVAAsForContextObjectProtocol.h"
 #import "KVAConfigureWithObjectProtocol.h"
-#import "KVADeeplink.h"  // for KVADeeplinksProcessorProvider
+#import "KVAEventSender.h"  // For KVAEventSenderProvider.
 #import "KVAFromObjectProtocol.h"
-#import "KVAEventSender.h"
+#import "KVASharedPropertyProvider.h"
+#endif
+
+#pragma mark KochavaTracker
+#ifdef KOCHAVA_FRAMEWORK
+#import <KochavaTracker/KochavaTracker.h>
+#else
+#import "KVADeeplink.h"  // for KVADeeplinksProcessorProvider
 #import "KVAPrivacyProfile.h"  // for KVAPrivacyProfileRegistrarProvider.
 #import "KVAPushNotificationsToken.h"  // for KVAPushNotificationsTokenAdderRemoverProvider.
-#import "KVASharedPropertyProvider.h"
 #endif
 
 
@@ -156,19 +164,6 @@
 
 
 /*!
- @method func invalidate()
- 
- @brief Invalidates an instance of class KVATracker.
- 
- @discussion This is similar to allowing an instance of the tracker deallocate, but it can also be used on the shared instance.  It will additionally signal certain sub-systems to invalidate themselves, which can result in a more assured and immediate halt.  The scope of this invalidation is not absolute.  Certain sub-systems will continue to run for a period of time until they may gracefully complete.  When using this method with the shared instance, you are guaranteed to be re-defaulted a new instance the next time it is referenced, and you may immediately move forward to re-configure it.
- 
- When you are not using Intelligent Consent Management, this method can be used to signal that the tracker may no longer run following consent having been denied.  When used this way, you may re-configure a tracker if/when consent is granted.
- */
-- (void)invalidate NS_SWIFT_NAME(invalidate());
-
-
-
-/*!
  @property - startedBool
  
  @brief A boolean indicating whether or not the tracker has been started.
@@ -186,6 +181,7 @@
  
  @discussion See also func start(withPartnerNameString:).  You may start a tracker with either an appGUIDString or a partnerNameString.
  
+ Swift example:
  @code
  KVATracker.shared.start(withAppGUIDString: "_YOUR_KOCHAVA_APP_GUID_")
  @endcode
@@ -203,11 +199,25 @@
  
  @discussion See also func start(withAppGUIDString:).  You may start a tracker with either an appGUIDString or a partnerNameString.
 
-@code
-KVATracker.shared.start(withPartnerNameString: "_YOUR_KOCHAVA_PARTNER_NAME_")
-@endcode
-*/
+ Swift example:
+ @code
+ KVATracker.shared.start(withPartnerNameString: "_YOUR_KOCHAVA_PARTNER_NAME_")
+ @endcode
+ */
 - (void)startWithPartnerNameString:(nonnull NSString *)partnerNameString NS_SWIFT_NAME(start(withPartnerNameString:));
+
+
+
+/*!
+ @method func invalidate()
+ 
+ @brief Invalidates an instance of class KVATracker.
+ 
+ @discussion This is similar to allowing an instance of the tracker deallocate, but it can also be used on the shared instance.  It will additionally signal certain sub-systems to invalidate themselves, which can result in a more assured and immediate halt.  The scope of this invalidation is not absolute.  Certain sub-systems will continue to run for a period of time until they may gracefully complete.  When using this method with the shared instance, you are guaranteed to be re-defaulted a new instance the next time it is referenced, and you may immediately move forward to re-configure it.
+ 
+ When you are not using Intelligent Consent Management, this method can be used to signal that the tracker may no longer run following consent having been denied.  When used this way, you may re-configure a tracker if/when consent is granted.
+ */
+- (void)invalidate NS_SWIFT_NAME(invalidate());
 
 
 
@@ -221,6 +231,48 @@ KVATracker.shared.start(withPartnerNameString: "_YOUR_KOCHAVA_PARTNER_NAME_")
  @param valueObject A value object for the advanced instruction.
  */
 - (void)executeAdvancedInstructionWithIdentifierString:(nonnull NSString *)identifierString valueObject:(nullable id)valueObject NS_SWIFT_NAME(executeAdvancedInstruction(withIdentifierString:valueObject:));
+
+
+
+/*!
+ @method - configureWith:context:
+ 
+ @brief Configures (updates) the instance from another object.
+ 
+ @param withObject An object from which to update the instance.  This is expected to be a JSON dictionary, or alternatively a native instance.
+ 
+ @param context The context.
+ 
+ @discussion This method can be used to make special configurations to the instance.  This method is equivalent to the support provided by KVAConfigureWithObjectProtocol;  however, it is formalized with a dispatch to the Kochava SDK's globalSerial queue and a log message.  It should not be confused with the v3 method to start the tracker, and it does not provide equivalent functionality.  For that see func start(withAppGUIDString:).
+ */
+- (void)configureWith:(nullable id)withObject context:(nullable KVAContext *)context NS_SWIFT_NAME(configure(with:context:));
+
+
+
+@end
+
+
+
+#pragma mark - feature Ad Network
+
+
+
+@protocol KVAAdNetworkProtocol;
+
+
+
+
+@interface KVATracker (AdNetwork_Public)
+
+
+/*!
+ @property adNetwork
+ 
+ @brief An instance of class KVAAdNetwork.
+ 
+ @discussion A controller for working with location services.
+ */
+@property (strong, nonatomic, nullable, readonly) id<KVAAdNetworkProtocol> adNetwork;
 
 
 
@@ -509,10 +561,10 @@ KVATracker.shared.start(withPartnerNameString: "_YOUR_KOCHAVA_PARTNER_NAME_")
 
 
 /*!
-@property events
+ @property events
 
-@brief A property which conforms to protocol KVAEventSender.
-*/
+ @brief A property which conforms to protocol KVAEventSender.
+ */
 @property (strong, nonatomic, nonnull, readonly) KVAEvents<KVAEventSender> *events;
 
 
@@ -555,12 +607,12 @@ KVATracker.shared.start(withPartnerNameString: "_YOUR_KOCHAVA_PARTNER_NAME_")
 
 
 
-@class KVALocationServices;
+@protocol KVALocationServicesProtocol;
+
 
 
 
 @interface KVATracker (LocationServices_Public)
-
 
 
 /*!
@@ -570,7 +622,7 @@ KVATracker.shared.start(withPartnerNameString: "_YOUR_KOCHAVA_PARTNER_NAME_")
  
  @discussion A controller for working with location services.
  */
-@property (strong, nonatomic, nullable, readonly) KVALocationServices *locationServices;
+@property (strong, nonatomic, nullable, readonly) id<KVALocationServicesProtocol> locationServices;
 
 
 

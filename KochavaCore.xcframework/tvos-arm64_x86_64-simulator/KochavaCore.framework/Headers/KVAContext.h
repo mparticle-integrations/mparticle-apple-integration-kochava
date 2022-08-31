@@ -17,6 +17,7 @@
 
 
 
+#pragma mark KochavaCore
 #ifdef KOCHAVA_FRAMEWORK
 #import <KochavaCore/KVAAsForContextObjectProtocol.h>
 #import <KochavaCore/KVAFromObjectProtocol.h>
@@ -24,10 +25,6 @@
 #import "KVAAsForContextObjectProtocol.h"
 #import "KVAFromObjectProtocol.h"
 #endif
-
-
-
-#pragma mark - ENUM
 
 
 
@@ -93,15 +90,6 @@
 
 
 /*!
- @property + sdkWrapper
- 
- @brief A context which represents an SDK Wrapper.
- */
-@property (class, strong, nonatomic, nonnull, readonly) KVAContext *sdkWrapper;
-
-
-
-/*!
  @property + server
  
  @brief A context which represents the Server.
@@ -132,7 +120,7 @@
  
  @discussion Examples:  "host", "log", "persistentStorage", "sdk", "server".
  */
-@property (strong, nonatomic, nonnull) NSString *nameString;
+@property (strong, nonatomic, nonnull, readonly) NSString *nameString;
 
 
 
