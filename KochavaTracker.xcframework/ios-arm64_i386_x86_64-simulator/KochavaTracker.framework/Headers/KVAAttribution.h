@@ -17,6 +17,7 @@
 
 
 
+#pragma mark KochavaCore
 #ifdef KOCHAVA_FRAMEWORK
 #import <KochavaCore/KochavaCore.h>
 #else
@@ -84,12 +85,12 @@
 
 
 /*!
-@method - retrieveResultWithCompletionHandler:
+ @method - retrieveResultWithCompletionHandler:
 
-@brief Get the attribution result with a completion handler.
+ @brief Get the attribution result with a completion handler.
  
  @param completionHandler A completion handler to call once the result has been retrieved.
-*/
+ */
 - (void)retrieveResultWithCompletionHandler:(void (^_Nullable)(KVAAttributionResult * _Nonnull attributionResult))completionHandler NS_SWIFT_NAME(retrieveResult(withCompletionHandler:));
 
 

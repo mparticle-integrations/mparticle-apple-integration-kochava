@@ -17,10 +17,12 @@
 
 
 
+#pragma mark System
 #if TARGET_OS_TV
 #import <JavaScriptCore/JavaScriptCore.h>
 #endif
 
+#pragma mark KochavaCore
 #ifdef KOCHAVA_FRAMEWORK
 #import <KochavaCore/KochavaCore.h>
 #else
@@ -61,28 +63,28 @@
 
 
 /*!
-@property attributedBool
+ @property attributedBool
 
-@brief A boolean indicating if the result attributed the install.
-*/
+ @brief A boolean indicating if the result attributed the install.
+ */
 @property (readonly) BOOL attributedBool;
 
 
 
 /*!
-@property firstInstallBool
+ @property firstInstallBool
 
-@brief A boolean indicating if the current install is the first install.
-*/
+ @brief A boolean indicating if the current install is the first install.
+ */
 @property (readonly) BOOL firstInstallBool;
 
 
 
 /*!
-@property rawDictionary
+ @property rawDictionary
  
-@brief A dictionary containing the raw result information.
-*/
+ @brief A dictionary containing the raw result information.
+ */
 @property (strong, nonatomic, nullable, readonly) NSDictionary *rawDictionary;
 
 
