@@ -18,9 +18,9 @@ let package = Package(
                  url: "https://github.com/mParticle/mparticle-apple-sdk",
                  .upToNextMajor(from: "8.3.0")),
         .package(name: "KochavaCore",
-                 url: "https://github.com/Kochava/Apple-SwiftPackage-KochavaCore", .upToNextMajor(from: "4.0.0")),
-        .package(name: "KochavaTracker", url: "https://github.com/Kochava/Apple-SwiftPackage-KochavaTracker.git", .upToNextMajor(from: "4.0.0")),
-        .package(name: "KochavaAdNetwork", url: "https://github.com/Kochava/Apple-SwiftPackage-KochavaAdNetwork.git", .upToNextMajor(from: "4.0.0")),
+                 url: "https://github.com/Kochava/Apple-SwiftPackage-KochavaCore", .upToNextMajor(from: "5.0.0")),
+        .package(name: "KochavaTracker", url: "https://github.com/Kochava/Apple-SwiftPackage-KochavaTracker.git", .upToNextMajor(from: "5.0.0")),
+        .package(name: "KochavaAdNetwork", url: "https://github.com/Kochava/Apple-SwiftPackage-KochavaAdNetwork.git", .upToNextMajor(from: "5.0.0")),
     ],
     targets: [
         .target(
