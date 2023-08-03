@@ -1,7 +1,5 @@
 #import "MPKitKochava.h"
 #import "MPKochavaSpatialCoordinate.h"
-//#import "MPKitRegister.h"
-//#import "MPEnums.h"
 #if defined(__has_include) && __has_include(<KochavaTracker/KochavaTracker.h>)
 #import <KochavaTracker/KochavaTracker.h>
 #else
@@ -272,7 +270,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
     [KVATracker.shared startWithAppGUIDString:self.configuration[kvAppId]];
     
     if (self.configuration[kvLimitAdTracking]) {
-        KVATracker.shared.appLimitAdTracking.boolean = [self.configuration[kvLimitAdTracking] boolValue] ? TRUE : FALSE;
+        KVATracker.shared.appLimitAdTracking.boolean = [self.configuration[kvLimitAdTracking] boolValue];
     }
     
     if (self.configuration[kvEnableLogging]) {
