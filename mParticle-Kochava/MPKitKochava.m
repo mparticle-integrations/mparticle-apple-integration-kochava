@@ -1,8 +1,7 @@
 #import "MPKitKochava.h"
 #import "MPKochavaSpatialCoordinate.h"
-#import "mParticle.h"
-#import "MPKitRegister.h"
-#import "MPEnums.h"
+//#import "MPKitRegister.h"
+//#import "MPEnums.h"
 #if defined(__has_include) && __has_include(<KochavaTracker/KochavaTracker.h>)
 #import <KochavaTracker/KochavaTracker.h>
 #else

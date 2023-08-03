@@ -27,7 +27,7 @@ let package = Package(
         .package(
             name: "KochavaTracker",
             url: "https://github.com/Kochava/Apple-SwiftPackage-KochavaTracker.git",
-                .upToNextMajor(from: "5.0.0")
+                .upToNextMajor(from: "7.0.0")
         ),
     ],
     targets: [
