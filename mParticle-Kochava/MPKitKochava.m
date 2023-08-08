@@ -1,17 +1,9 @@
 #import "MPKitKochava.h"
 #import "MPKochavaSpatialCoordinate.h"
-#import "mParticle.h"
-#import "MPKitRegister.h"
-#import "MPEnums.h"
 #if defined(__has_include) && __has_include(<KochavaTracker/KochavaTracker.h>)
 #import <KochavaTracker/KochavaTracker.h>
 #else
 #import "KochavaTracker.h"
-#endif
-#if defined(__has_include) && __has_include(<KochavaAdNetwork/KochavaAdNetwork.h>)
-#import <KochavaAdNetwork/KochavaAdNetwork.h>
-#else
-#import "KochavaAdNetwork.h"
 #endif
 
 NSString *const MPKitKochavaErrorKey = @"mParticle-Kochava Error";
@@ -133,7 +125,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
 
 + (void)addCustomIdentityLinks:(NSDictionary *)identityLink {
     for (NSString *key in identityLink.allKeys) {
-        [KVATracker.shared.identityLink registerWithNameString:key identifierString:identityLink[key]];
+        [KVAIdentityLink registerWithName:key identifier:identityLink[key]];
     }
 }
 
@@ -154,7 +146,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
     }
     
     for (NSString *key in identityInfo.allKeys) {
-        [KVATracker.shared.identityLink registerWithNameString:key identifierString:identityInfo[key]];
+        [KVAIdentityLink registerWithName:key identifier:identityInfo[key]];
     }
 }
 
@@ -211,7 +203,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
     }
     
     for (NSString *key in identityInfo.allKeys) {
-        [KVATracker.shared.identityLink registerWithNameString:key identifierString:identityInfo[key]];
+        [KVAIdentityLink registerWithName:key identifier:identityInfo[key]];
     }
 }
 
@@ -274,13 +266,11 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
             KVATracker.shared.appTrackingTransparency.authorizationStatusWaitTimeInterval = [self.configuration[kvWaitIntervalATT] integerValue];
         }
     }
-    
-    [KVAAdNetworkProduct.shared register];
-    
+        
     [KVATracker.shared startWithAppGUIDString:self.configuration[kvAppId]];
     
     if (self.configuration[kvLimitAdTracking]) {
-        KVATracker.shared.appLimitAdTrackingBool = [self.configuration[kvLimitAdTracking] boolValue] ? TRUE : FALSE;
+        KVATracker.shared.appLimitAdTracking.boolean = [self.configuration[kvLimitAdTracking] boolValue];
     }
     
     if (self.configuration[kvEnableLogging]) {
@@ -294,7 +284,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
     NSDictionary *userActivityDictionary = self.launchOptions[UIApplicationLaunchOptionsUserActivityDictionaryKey];
     if (userActivityDictionary == nil)
     {
-        [KVADeeplink processWithURL:nil completionHandler:^(KVADeeplink * _Nonnull deeplink)
+        [KVADeeplink processWithURL:nil closure_didComplete:^(KVADeeplink * _Nonnull deeplink)
          {
             NSString *destinationString = deeplink.destinationString;
             if (destinationString.length == 0) {
@@ -345,7 +335,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
 }
 
 - (MPKitExecStatus *)setOptOut:(BOOL)optOut {
-    KVATracker.shared.appLimitAdTrackingBool = optOut;
+    KVATracker.shared.appLimitAdTracking.boolean = optOut;
     
     MPKitExecStatus *execStatus = [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
     return execStatus;
@@ -362,8 +352,8 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
 }
 
 - (MPKitExecStatus *)routeEvent:(MPEvent *)event {
-    KVAEvent *kochavaEvent = [KVAEvent eventWithType:KVAEventType.custom];
-    kochavaEvent.customEventNameString = event.name;
+    KVAEvent *kochavaEvent = [[KVAEvent alloc] initWithType:KVAEventType.custom];
+    kochavaEvent.customEventName = event.name;
     kochavaEvent.infoDictionary = event.customAttributes;
     [kochavaEvent send];
     
@@ -371,7 +361,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
 }
 
 - (MPKitExecStatus *)routeCommerceEvent:(MPCommerceEvent *)commerceEvent {
-    KVAEvent *kochavaEvent = [KVAEvent eventWithType:KVAEventType.custom];
+    KVAEvent *kochavaEvent = [[KVAEvent alloc] initWithType:KVAEventType.custom];
     NSString *eventName;
     if (commerceEvent.promotionContainer) {
         eventName = [NSString stringWithFormat:@"eCommerce - %@", KVNSStringFromPromotionAction(commerceEvent.promotionContainer.action)];
@@ -380,7 +370,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
     } else {
         eventName = [NSString stringWithFormat:@"eCommerce - %@", KVNSStringFromProductAction(commerceEvent.action)];
     }
-    kochavaEvent.customEventNameString = eventName;
+    kochavaEvent.customEventName = eventName;
     NSMutableDictionary *info = [commerceEvent.customAttributes mutableCopy];
     if (info == nil) {
         info = [[NSMutableDictionary alloc] init];
@@ -423,8 +413,8 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
 }
 
 - (MPKitExecStatus *)logScreen:(MPEvent *)event {
-    KVAEvent *kochavaEvent = [KVAEvent eventWithType:KVAEventType.custom];
-    kochavaEvent.customEventNameString = [NSString stringWithFormat:@"Viewed %@", event.name];
+    KVAEvent *kochavaEvent = [[KVAEvent alloc] initWithType:KVAEventType.custom];
+    kochavaEvent.customEventName = [NSString stringWithFormat:@"Viewed %@", event.name];
     kochavaEvent.infoDictionary = event.customAttributes;
     [kochavaEvent send];
     
@@ -466,7 +456,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
 - (MPKitExecStatus *)continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void(^ )(NSArray * restorableObjects))restorationHandler {
     NSURL *url = userActivity.webpageURL;
     
-    [KVADeeplink processWithURL:url completionHandler:^(KVADeeplink * _Nonnull deeplink) {
+    [KVADeeplink processWithURL:url closure_didComplete:^(KVADeeplink * _Nonnull deeplink) {
         NSString *destinationString = deeplink.destinationString;
         if (destinationString.length == 0) {
             [self->_kitApi onAttributionCompleteWithResult:nil error:[self errorWithMessage:@"Received nil deeplink from Kochava"]];
