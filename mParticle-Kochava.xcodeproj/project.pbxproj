@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		391EC46328BFF9070084955F /* KochavaAdNetwork.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 391EC46228BFF9070084955F /* KochavaAdNetwork.xcframework */; };
 		39F16BF825D3044700D37AD7 /* KochavaCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39F16BF625D3044700D37AD7 /* KochavaCore.xcframework */; };
 		39F16BF925D3044700D37AD7 /* KochavaTracker.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39F16BF725D3044700D37AD7 /* KochavaTracker.xcframework */; };
 		39F881CA25D210CD0061916D /* mParticle_Kochava.h in Headers */ = {isa = PBXBuildFile; fileRef = 39F881C825D210CD0061916D /* mParticle_Kochava.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -19,7 +18,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		391EC46228BFF9070084955F /* KochavaAdNetwork.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = KochavaAdNetwork.xcframework; sourceTree = "<group>"; };
 		39F16BF625D3044700D37AD7 /* KochavaCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = KochavaCore.xcframework; sourceTree = "<group>"; };
 		39F16BF725D3044700D37AD7 /* KochavaTracker.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = KochavaTracker.xcframework; sourceTree = "<group>"; };
 		39F881C525D210CD0061916D /* mParticle_Kochava.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = mParticle_Kochava.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,7 +40,6 @@
 				39F16BF825D3044700D37AD7 /* KochavaCore.xcframework in Frameworks */,
 				39F881EA25D214DD0061916D /* mParticle_Apple_SDK.framework in Frameworks */,
 				39F16BF925D3044700D37AD7 /* KochavaTracker.xcframework in Frameworks */,
-				391EC46328BFF9070084955F /* KochavaAdNetwork.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,7 +49,6 @@
 		39F881BB25D210CD0061916D = {
 			isa = PBXGroup;
 			children = (
-				391EC46228BFF9070084955F /* KochavaAdNetwork.xcframework */,
 				39F16BF625D3044700D37AD7 /* KochavaCore.xcframework */,
 				39F16BF725D3044700D37AD7 /* KochavaTracker.xcframework */,
 				39F881C725D210CD0061916D /* mParticle-Kochava */,
