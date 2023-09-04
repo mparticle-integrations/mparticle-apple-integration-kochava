@@ -6,135 +6,128 @@
 	<dict>
 		<key>Resources/Info.plist</key>
 		<data>
-		8Iu6bgjsGco52JaUGu5RnPlpr7Q=
+		y68VmMn9lCxj1rlZK3018ILmuT0=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Headers/KVAAppTrackingTransparency.h</key>
+		<key>Headers/KVAAdNetwork.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			XAEzEPR9/F+onOhmK+JbBXPYY2pfktkrRcSVN45N12E=
+			A1JT5uXvdgYu01Sj4vkSfuJRGASFX3UV6rMyAzK/sXI=
 			</data>
 		</dict>
-		<key>Headers/KVAAttribution.h</key>
+		<key>Headers/KVAAdNetworkConversion.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			r6gWiWHvQ1Y/bNBOSQdaLOWlEtgz31nFDnftXn1LUi8=
-			</data>
-		</dict>
-		<key>Headers/KVAAttributionResult.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			iaZtypHswqhMgWfu67gMOTDuwaOH4u7Nn+ehK9ley4E=
-			</data>
-		</dict>
-		<key>Headers/KVACustomIdentifiers.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			10dCBZ43B3mv9Swg9iEiTmbSWmRigSnYOHNxx+j+2Mo=
+			HvbHvqzgv8GDHBYqz4JOm7+2BE3wfaN4CbEziBiIn2A=
 			</data>
 		</dict>
 		<key>Headers/KVADeeplink.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CjOYxukhiBjDYUnaJtP49clwMHlp+Fcd9H1TfbqDV1U=
+			IRDMDdWy0bW6OF7IVV/Ewd2HmvuYUVP58FTaCgrOZQc=
 			</data>
 		</dict>
-		<key>Headers/KVADeeplinks.h</key>
+		<key>Headers/KochavaTracker-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Syer87nED3d7KIpZkWBT9cjgzqgVq/UH3CfQmE173pc=
-			</data>
-		</dict>
-		<key>Headers/KVAEvent+Standard.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			/EU5izUJayH42bucN8k7E52qii/ICqaIVU+kpadrbzc=
-			</data>
-		</dict>
-		<key>Headers/KVAEvents.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			3eZT54By0ohoxjkmv+iRZX7bjAFCplqK8HpH0nPkCeg=
-			</data>
-		</dict>
-		<key>Headers/KVAIdentityLink.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			Az4R7WNAf2S35ATuMqQr3Qv7V7WEuMDnV6yP9N/LG90=
-			</data>
-		</dict>
-		<key>Headers/KVAPrivacy.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			bsShYpfs96uxvhNfb8Ei/C0t9RMhyKfLoiVYhZA0owA=
-			</data>
-		</dict>
-		<key>Headers/KVAPrivacyProfile.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			a9C9xfoA6ipOeplDOmziCuVyP579ufc0dXDJMHdEKFE=
-			</data>
-		</dict>
-		<key>Headers/KVAPushNotifications.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			gF4hpIEZsWF0upOIVuGIx3YCR2ovqstM2ZZ3xdtdWoc=
-			</data>
-		</dict>
-		<key>Headers/KVAPushNotificationsToken.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			a8MqIWKeELPpMDQ1ZFwK2Lb5aEI8DuR911PY0pOHmIM=
-			</data>
-		</dict>
-		<key>Headers/KVATracker.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			MzRdoPssyOgpSvGnLkR1IlndJWWPdDRl62VyCeEMZvw=
-			</data>
-		</dict>
-		<key>Headers/KVATrackerProduct.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			aHIMntR4sBREZmToT873q3TbqrptBCGSkpER6qN6mH4=
+			pcRpB6s/V/B+0MCPR0E4Bhw6X/g29sHwzJaja9DKrhc=
 			</data>
 		</dict>
 		<key>Headers/KochavaTracker.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			of/KUtPvtIFCCb8ir+/CysRZ7NsMclMnuw7BocRNB+c=
+			azvbaNMpg6z0v4lI5fb8/Hb5nPB8JA/wFRe6aDjqHdg=
+			</data>
+		</dict>
+		<key>Modules/KochavaTracker.swiftmodule/arm64-apple-ios-macabi.abi.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			kvJ1zSQqmsCuB4CynwUoa2LyO6Y5eMJH01iBAZ4hrl0=
+			</data>
+		</dict>
+		<key>Modules/KochavaTracker.swiftmodule/arm64-apple-ios-macabi.private.swiftinterface</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			zTzGSm6W8rP/w5A3vzokFCv23YDGD1XEagcW8UiKOco=
+			</data>
+		</dict>
+		<key>Modules/KochavaTracker.swiftmodule/arm64-apple-ios-macabi.swiftdoc</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			rrnIDpkDNvqWjS+cU7vhhuu1O50hL7i9HdtwPHq7/N4=
+			</data>
+		</dict>
+		<key>Modules/KochavaTracker.swiftmodule/arm64-apple-ios-macabi.swiftinterface</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			zTzGSm6W8rP/w5A3vzokFCv23YDGD1XEagcW8UiKOco=
+			</data>
+		</dict>
+		<key>Modules/KochavaTracker.swiftmodule/arm64-apple-ios-macabi.swiftmodule</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			oI8NtE2JpIpahPUY9/hXXVp5Fht6WNLYcbI48/G+ovg=
+			</data>
+		</dict>
+		<key>Modules/KochavaTracker.swiftmodule/x86_64-apple-ios-macabi.abi.json</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			kvJ1zSQqmsCuB4CynwUoa2LyO6Y5eMJH01iBAZ4hrl0=
+			</data>
+		</dict>
+		<key>Modules/KochavaTracker.swiftmodule/x86_64-apple-ios-macabi.private.swiftinterface</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			UFcYOGiGBfvhVTY0tnNdOVieRJpq4ayyJ+9K9etWfv4=
+			</data>
+		</dict>
+		<key>Modules/KochavaTracker.swiftmodule/x86_64-apple-ios-macabi.swiftdoc</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			vfAF9x8Bpw2Kovq9KB1TUlZy06qZ7j8TmPT3MP3rAsY=
+			</data>
+		</dict>
+		<key>Modules/KochavaTracker.swiftmodule/x86_64-apple-ios-macabi.swiftinterface</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			UFcYOGiGBfvhVTY0tnNdOVieRJpq4ayyJ+9K9etWfv4=
+			</data>
+		</dict>
+		<key>Modules/KochavaTracker.swiftmodule/x86_64-apple-ios-macabi.swiftmodule</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			kRps16/Bqrce3rUCXppIsNtMebcL/4qUrFUevW/S3bA=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ImmqlvKCH1yRvfhKI398KqgQ3zGK+W1sl+QD+rgqeRs=
+			PVF4hEB09E+RftHxTVBy0DCtPTii5k/JiXbs7JFOd9w=
 			</data>
 		</dict>
 		<key>Resources/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			tbRjmSHlfGnjx/GEHaW8mwhSMt+3rSMaxvPTYznoIxM=
+			zxaPp2LYDOO8szL8EE/iapVgRdEMv4wBH3qJ6jMaeL0=
 			</data>
 		</dict>
 	</dict>

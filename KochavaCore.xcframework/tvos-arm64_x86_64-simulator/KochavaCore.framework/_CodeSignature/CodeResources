@@ -4,506 +4,154 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Headers/KVAAppGroups.h</key>
-		<data>
-		nBNPZxEWZxjRBiiiLm45qUytKMU=
-		</data>
-		<key>Headers/KVAAsForContextObjectProtocol.h</key>
-		<data>
-		OAyWhD06j40AuO/L5ykX4RlD2Ng=
-		</data>
-		<key>Headers/KVAConfigureWithObjectProtocol.h</key>
-		<data>
-		1nIFi1PmyzV0p79I2VcvdQtiReE=
-		</data>
-		<key>Headers/KVAConsent.h</key>
-		<data>
-		hBclfRBFF34B6ldJQ0n56qddfW0=
-		</data>
-		<key>Headers/KVAContext.h</key>
-		<data>
-		MG6x+ovuSzUMjA7nRUzKwG7Bs28=
-		</data>
-		<key>Headers/KVACoreProduct.h</key>
-		<data>
-		pDe92n2huXewuuUtU0ZBg7h09HQ=
-		</data>
-		<key>Headers/KVAEvent.h</key>
-		<data>
-		NBQ+YbEv0meeo+4YLdXQolduetw=
-		</data>
-		<key>Headers/KVAEventSender.h</key>
-		<data>
-		H28wdYNcGywhK2QoERPym2Muyfw=
-		</data>
-		<key>Headers/KVAEventType.h</key>
-		<data>
-		MuaHDrdFgOvclQSZ82p616d5pWA=
-		</data>
-		<key>Headers/KVAFromObjectProtocol.h</key>
-		<data>
-		nfcYOEBr0cAtDQS48BLK1a082yM=
-		</data>
-		<key>Headers/KVALog.h</key>
-		<data>
-		cHYmulBDhIe1QIQ27viK3KXkSPc=
-		</data>
-		<key>Headers/KVAPartner.h</key>
-		<data>
-		h/FAx3p/JiVg6W77gnk3pkdCkm0=
-		</data>
-		<key>Headers/KVAProduct.h</key>
-		<data>
-		VSXdx6EtZADswKcJrduleEOWuA0=
-		</data>
-		<key>Headers/KVASharedPropertyProvider.h</key>
-		<data>
-		ZGNyaIodQTeAD/UKjzhGPfKjFVM=
-		</data>
-		<key>Headers/KVAStartable.h</key>
-		<data>
-		pwJG+sXzLkpA7WrUcPDwXNeejI4=
-		</data>
-		<key>Headers/KVASystem.h</key>
-		<data>
-		ukQqZIWOrUAwBSG/ceHvmB8phZI=
-		</data>
 		<key>Headers/KochavaCore-Swift.h</key>
 		<data>
-		HRixvRzaXY/gIfgLxCfYcdmctQs=
+		lqERyYNc4dsU5UZuSUF8iCZ6F4g=
 		</data>
 		<key>Headers/KochavaCore.h</key>
 		<data>
-		g3B0TyQwhZC5u3GLPBp5XjRoDRc=
-		</data>
-		<key>Headers/NSObject+KochavaCore.h</key>
-		<data>
-		qPuFnuIVqysEGSojSXDTln/Qbkg=
-		</data>
-		<key>Headers/NSString+KochavaCore.h</key>
-		<data>
-		2M6XEO4y0uVYbRla8MzeGHN+mWM=
+		aNC34zxU2S8qV+S/tJrazAfCS2M=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		xDm5dX/Fb61mJo8FV8dXGOyn+Wk=
+		XN+EWKc3Hfv+3vYs7lNjamGmlw0=
+		</data>
+		<key>Modules/KochavaCore.swiftmodule/arm64-apple-tvos-simulator.abi.json</key>
+		<data>
+		Rc71fGLWk/D1lA0I0CuseVi03E8=
+		</data>
+		<key>Modules/KochavaCore.swiftmodule/arm64-apple-tvos-simulator.private.swiftinterface</key>
+		<data>
+		ZW8+MvkMSbWPhFWn8IzBfP5OAe4=
 		</data>
 		<key>Modules/KochavaCore.swiftmodule/arm64-apple-tvos-simulator.swiftdoc</key>
 		<data>
-		VhwBhbB/xbjw7StX0jzA/WVdk6c=
+		N39EPyigxSFE/5uBf//j60yDmNs=
 		</data>
 		<key>Modules/KochavaCore.swiftmodule/arm64-apple-tvos-simulator.swiftinterface</key>
 		<data>
-		SmF7r+VwMiEfrfkzsfyR2JgwM40=
+		ZW8+MvkMSbWPhFWn8IzBfP5OAe4=
 		</data>
 		<key>Modules/KochavaCore.swiftmodule/arm64-apple-tvos-simulator.swiftmodule</key>
 		<data>
-		VHSzttr9Bw0rFh6BnkHIrFNkClw=
+		uVtA0Hmo7isovYVP2jjl/diUiIA=
 		</data>
-		<key>Modules/KochavaCore.swiftmodule/arm64.swiftdoc</key>
+		<key>Modules/KochavaCore.swiftmodule/x86_64-apple-tvos-simulator.abi.json</key>
 		<data>
-		VhwBhbB/xbjw7StX0jzA/WVdk6c=
+		Rc71fGLWk/D1lA0I0CuseVi03E8=
 		</data>
-		<key>Modules/KochavaCore.swiftmodule/arm64.swiftinterface</key>
+		<key>Modules/KochavaCore.swiftmodule/x86_64-apple-tvos-simulator.private.swiftinterface</key>
 		<data>
-		SmF7r+VwMiEfrfkzsfyR2JgwM40=
-		</data>
-		<key>Modules/KochavaCore.swiftmodule/arm64.swiftmodule</key>
-		<data>
-		VHSzttr9Bw0rFh6BnkHIrFNkClw=
+		58UZ4Z1r45t0mYf52smu5mKJS6Q=
 		</data>
 		<key>Modules/KochavaCore.swiftmodule/x86_64-apple-tvos-simulator.swiftdoc</key>
 		<data>
-		zF6jmIdQrOEeHe4q86TcFGVuPkA=
+		+j3WET4dPDd5GJdb/62zlgqvRek=
 		</data>
 		<key>Modules/KochavaCore.swiftmodule/x86_64-apple-tvos-simulator.swiftinterface</key>
 		<data>
-		gr7xoUkTUcUJBtOBOq3amzljVNE=
+		58UZ4Z1r45t0mYf52smu5mKJS6Q=
 		</data>
 		<key>Modules/KochavaCore.swiftmodule/x86_64-apple-tvos-simulator.swiftmodule</key>
 		<data>
-		NXFJcDh9i0kFwkeHtFVIa28NmLM=
-		</data>
-		<key>Modules/KochavaCore.swiftmodule/x86_64.swiftdoc</key>
-		<data>
-		zF6jmIdQrOEeHe4q86TcFGVuPkA=
-		</data>
-		<key>Modules/KochavaCore.swiftmodule/x86_64.swiftinterface</key>
-		<data>
-		gr7xoUkTUcUJBtOBOq3amzljVNE=
-		</data>
-		<key>Modules/KochavaCore.swiftmodule/x86_64.swiftmodule</key>
-		<data>
-		NXFJcDh9i0kFwkeHtFVIa28NmLM=
+		5CHiVZYz3xOBqKKjCEqk+SBwEPo=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		/KgPlBn4jKA6ll91rLhztBF3eLc=
+		mPnHeF4+p1VNpbKNGuDcTI3FwGU=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Headers/KVAAppGroups.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			nBNPZxEWZxjRBiiiLm45qUytKMU=
-			</data>
-			<key>hash2</key>
-			<data>
-			ZwS6Wa7T+pyR9PQ1Ocu7GZlL6wrzKbZUx9Xap/FxePk=
-			</data>
-		</dict>
-		<key>Headers/KVAAsForContextObjectProtocol.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			OAyWhD06j40AuO/L5ykX4RlD2Ng=
-			</data>
-			<key>hash2</key>
-			<data>
-			wV3JixEWJ2sp0H8sVB81Oy2Km0Zm9oFjAsqhdGWMEr4=
-			</data>
-		</dict>
-		<key>Headers/KVAConfigureWithObjectProtocol.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			1nIFi1PmyzV0p79I2VcvdQtiReE=
-			</data>
-			<key>hash2</key>
-			<data>
-			vV4lKFUsQXqYB8mX03H7wC4XTn96f7jBngoZJ4SEv2E=
-			</data>
-		</dict>
-		<key>Headers/KVAConsent.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			hBclfRBFF34B6ldJQ0n56qddfW0=
-			</data>
-			<key>hash2</key>
-			<data>
-			ZHQCbIgPTzP9f/AxpXIyPNGWhjh2PejhiQtwi4M/qgI=
-			</data>
-		</dict>
-		<key>Headers/KVAContext.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			MG6x+ovuSzUMjA7nRUzKwG7Bs28=
-			</data>
-			<key>hash2</key>
-			<data>
-			47PAXYb968klK/bFj89nbmFkuLRQP5JeOa3DIc6ddP0=
-			</data>
-		</dict>
-		<key>Headers/KVACoreProduct.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			pDe92n2huXewuuUtU0ZBg7h09HQ=
-			</data>
-			<key>hash2</key>
-			<data>
-			9m4MTIXrZLz9xf/QGk5DGqLPoXlhIpEloMkT1MTbOss=
-			</data>
-		</dict>
-		<key>Headers/KVAEvent.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			NBQ+YbEv0meeo+4YLdXQolduetw=
-			</data>
-			<key>hash2</key>
-			<data>
-			XEDhdvN0mgxHuwuiew40QXRrfpwUuGQ2Y7dNkOJMPI8=
-			</data>
-		</dict>
-		<key>Headers/KVAEventSender.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			H28wdYNcGywhK2QoERPym2Muyfw=
-			</data>
-			<key>hash2</key>
-			<data>
-			TJ5c/Uo3tLzy/NDBjAMboELDAfWNGOvwdnPssFFCw44=
-			</data>
-		</dict>
-		<key>Headers/KVAEventType.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			MuaHDrdFgOvclQSZ82p616d5pWA=
-			</data>
-			<key>hash2</key>
-			<data>
-			urwpXDCsuafoapGh3uFrXPXLhcrlcqn44WIazpxk0EE=
-			</data>
-		</dict>
-		<key>Headers/KVAFromObjectProtocol.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			nfcYOEBr0cAtDQS48BLK1a082yM=
-			</data>
-			<key>hash2</key>
-			<data>
-			P3qJFqXCM1jodaMNI0TjyrSP2AJy6MoL9AwYnkWxDyk=
-			</data>
-		</dict>
-		<key>Headers/KVALog.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			cHYmulBDhIe1QIQ27viK3KXkSPc=
-			</data>
-			<key>hash2</key>
-			<data>
-			GNbzho75V8noXyehcFq9QI4ffiuwx8uM3/ueo2xiDN0=
-			</data>
-		</dict>
-		<key>Headers/KVAPartner.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			h/FAx3p/JiVg6W77gnk3pkdCkm0=
-			</data>
-			<key>hash2</key>
-			<data>
-			o0NgUQA8CvdTEiwMpXCV9y1ieEFny7LLNlNsO0OGyjg=
-			</data>
-		</dict>
-		<key>Headers/KVAProduct.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			VSXdx6EtZADswKcJrduleEOWuA0=
-			</data>
-			<key>hash2</key>
-			<data>
-			x27MM9X1hhnflHmZ42f9t6frEMo0lSua7DtM105Pbyg=
-			</data>
-		</dict>
-		<key>Headers/KVASharedPropertyProvider.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			ZGNyaIodQTeAD/UKjzhGPfKjFVM=
-			</data>
-			<key>hash2</key>
-			<data>
-			QOyg80rTrU4sjDV1ruq960jY2iI4yrTehRxfHFROUN8=
-			</data>
-		</dict>
-		<key>Headers/KVAStartable.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			pwJG+sXzLkpA7WrUcPDwXNeejI4=
-			</data>
-			<key>hash2</key>
-			<data>
-			xupZUWGus2Ha2O+d36L5WqNA7wyS5lrqoztavGr1f6c=
-			</data>
-		</dict>
-		<key>Headers/KVASystem.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			ukQqZIWOrUAwBSG/ceHvmB8phZI=
-			</data>
-			<key>hash2</key>
-			<data>
-			F0YzVulmRR2dvLDixA687JeTOZqGUYestd1DMo/Vxnk=
-			</data>
-		</dict>
 		<key>Headers/KochavaCore-Swift.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			HRixvRzaXY/gIfgLxCfYcdmctQs=
-			</data>
 			<key>hash2</key>
 			<data>
-			5bKutnt900yw6VuKjk5IGeu97uYwpW1Kjp5mYMyyqKY=
+			uhMV8s4aLZ0UXivP8m1Wz/CN6nxNJ6o28Qwzy2gHrxo=
 			</data>
 		</dict>
 		<key>Headers/KochavaCore.h</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			g3B0TyQwhZC5u3GLPBp5XjRoDRc=
-			</data>
 			<key>hash2</key>
 			<data>
-			GKuNyMoWIK/XBDZOeAo5VzXQ2Km4RZa6QX1iqC69GXE=
+			96qB8T/Mj9ANvoKgT1bA21LHw4KZ1K8+5+tHERiTKBg=
 			</data>
 		</dict>
-		<key>Headers/NSObject+KochavaCore.h</key>
+		<key>Modules/KochavaCore.swiftmodule/arm64-apple-tvos-simulator.abi.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			qPuFnuIVqysEGSojSXDTln/Qbkg=
-			</data>
 			<key>hash2</key>
 			<data>
-			lDRKekdr837CFdxvNBZMpMw3WKTJR3pfIZ8GXIOoAB8=
+			vAX+qassrx7LaRelMgYRmJuaY0tV6cIi/6dGN+7YW8I=
 			</data>
 		</dict>
-		<key>Headers/NSString+KochavaCore.h</key>
+		<key>Modules/KochavaCore.swiftmodule/arm64-apple-tvos-simulator.private.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			2M6XEO4y0uVYbRla8MzeGHN+mWM=
-			</data>
 			<key>hash2</key>
 			<data>
-			eVdVRlq0W8M8fVhdeoa9U/pjj7DxC5WZkyAFSfcHZX0=
+			lNBgl9H2vDy7BFxyX0Roz7v3485zsK4oUx6y0WcMk3Q=
 			</data>
 		</dict>
 		<key>Modules/KochavaCore.swiftmodule/arm64-apple-tvos-simulator.swiftdoc</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			VhwBhbB/xbjw7StX0jzA/WVdk6c=
-			</data>
 			<key>hash2</key>
 			<data>
-			nkXkh0cswhBgClt7wgbB+ng4Wn/mqtvN0JZqLVnMX2U=
+			hQqD9ThhrcxmmK0dXkIwkf+r3ShFS1cGGnpPPyuYROA=
 			</data>
 		</dict>
 		<key>Modules/KochavaCore.swiftmodule/arm64-apple-tvos-simulator.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			SmF7r+VwMiEfrfkzsfyR2JgwM40=
-			</data>
 			<key>hash2</key>
 			<data>
-			OAWL90IKaDtaK6/J216CkNGjhFl7PSivEXnIh+LzYKY=
+			lNBgl9H2vDy7BFxyX0Roz7v3485zsK4oUx6y0WcMk3Q=
 			</data>
 		</dict>
 		<key>Modules/KochavaCore.swiftmodule/arm64-apple-tvos-simulator.swiftmodule</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			VHSzttr9Bw0rFh6BnkHIrFNkClw=
-			</data>
 			<key>hash2</key>
 			<data>
-			U6TeAegMIeI5RTvRvRmsyd9iB732xeZLVEczyh22po4=
+			UAE83I5+eRrmU0bkyUXBCvyBg32ttv30sDZSuTRzMFo=
 			</data>
 		</dict>
-		<key>Modules/KochavaCore.swiftmodule/arm64.swiftdoc</key>
+		<key>Modules/KochavaCore.swiftmodule/x86_64-apple-tvos-simulator.abi.json</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			VhwBhbB/xbjw7StX0jzA/WVdk6c=
-			</data>
 			<key>hash2</key>
 			<data>
-			nkXkh0cswhBgClt7wgbB+ng4Wn/mqtvN0JZqLVnMX2U=
+			vAX+qassrx7LaRelMgYRmJuaY0tV6cIi/6dGN+7YW8I=
 			</data>
 		</dict>
-		<key>Modules/KochavaCore.swiftmodule/arm64.swiftinterface</key>
+		<key>Modules/KochavaCore.swiftmodule/x86_64-apple-tvos-simulator.private.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			SmF7r+VwMiEfrfkzsfyR2JgwM40=
-			</data>
 			<key>hash2</key>
 			<data>
-			OAWL90IKaDtaK6/J216CkNGjhFl7PSivEXnIh+LzYKY=
-			</data>
-		</dict>
-		<key>Modules/KochavaCore.swiftmodule/arm64.swiftmodule</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			VHSzttr9Bw0rFh6BnkHIrFNkClw=
-			</data>
-			<key>hash2</key>
-			<data>
-			U6TeAegMIeI5RTvRvRmsyd9iB732xeZLVEczyh22po4=
+			ShG9Kd7eAms/58cImPif8V9RUsdvOwY4GgASLmkMPOo=
 			</data>
 		</dict>
 		<key>Modules/KochavaCore.swiftmodule/x86_64-apple-tvos-simulator.swiftdoc</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			zF6jmIdQrOEeHe4q86TcFGVuPkA=
-			</data>
 			<key>hash2</key>
 			<data>
-			QXIKmJEmIQexdrG4E2Lhx4BFagYtIKnq9hJj6MbsUIU=
+			FvNoB6q+47fB1reu7FGZ2CUmVHfhmER0n0ieTrWb8mo=
 			</data>
 		</dict>
 		<key>Modules/KochavaCore.swiftmodule/x86_64-apple-tvos-simulator.swiftinterface</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			gr7xoUkTUcUJBtOBOq3amzljVNE=
-			</data>
 			<key>hash2</key>
 			<data>
-			9W2YPfHdAz9PoMAWS4Cq2m2x4eJfmwP82rCIXjR/l2U=
+			ShG9Kd7eAms/58cImPif8V9RUsdvOwY4GgASLmkMPOo=
 			</data>
 		</dict>
 		<key>Modules/KochavaCore.swiftmodule/x86_64-apple-tvos-simulator.swiftmodule</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			NXFJcDh9i0kFwkeHtFVIa28NmLM=
-			</data>
 			<key>hash2</key>
 			<data>
-			Qx7qWCX8gsV526mOyxLO18ZojzEumsXmWJkW4L8ulKk=
-			</data>
-		</dict>
-		<key>Modules/KochavaCore.swiftmodule/x86_64.swiftdoc</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			zF6jmIdQrOEeHe4q86TcFGVuPkA=
-			</data>
-			<key>hash2</key>
-			<data>
-			QXIKmJEmIQexdrG4E2Lhx4BFagYtIKnq9hJj6MbsUIU=
-			</data>
-		</dict>
-		<key>Modules/KochavaCore.swiftmodule/x86_64.swiftinterface</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			gr7xoUkTUcUJBtOBOq3amzljVNE=
-			</data>
-			<key>hash2</key>
-			<data>
-			9W2YPfHdAz9PoMAWS4Cq2m2x4eJfmwP82rCIXjR/l2U=
-			</data>
-		</dict>
-		<key>Modules/KochavaCore.swiftmodule/x86_64.swiftmodule</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			NXFJcDh9i0kFwkeHtFVIa28NmLM=
-			</data>
-			<key>hash2</key>
-			<data>
-			Qx7qWCX8gsV526mOyxLO18ZojzEumsXmWJkW4L8ulKk=
+			GDL2Ifk48UAAAD4qTF2xireS/lXEm+7+ixqqiH2a6xc=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			/KgPlBn4jKA6ll91rLhztBF3eLc=
-			</data>
 			<key>hash2</key>
 			<data>
-			LCJnjxjlq9/YL6dAk58JJvD7fYQg76pJzzVSlI2Uw1g=
+			cwNWy2Dp1TnXoBn91iWC96is4j2CYQWN/OZljsuJxBc=
 			</data>
 		</dict>
 	</dict>
