@@ -153,7 +153,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
     }];
 }
 
-- (void)synchronize {
+- (void)synchronizeIdentity {
     FilteredMParticleUser *user = [self currentUser];
     if (!user.userIdentities || user.userIdentities.count == 0) {
         return;
@@ -273,7 +273,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
     }
     
     if (self.configuration[kvUserIdentificationType] || self.configuration[kvEmailIdentificationType] ) {
-        [self synchronize];
+        [self synchronizeIdentity];
     }
     
     NSDictionary *userActivityDictionary = self.launchOptions[UIApplicationLaunchOptionsUserActivityDictionaryKey];
@@ -425,7 +425,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
     }
     
     if (self.configuration[kvUserIdentificationType] || self.configuration[kvEmailIdentificationType] ) {
-        [self synchronize];
+        [self synchronizeIdentity];
         execStatus = [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
     }
     
