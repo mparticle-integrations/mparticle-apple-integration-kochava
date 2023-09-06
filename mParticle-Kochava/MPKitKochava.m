@@ -14,8 +14,8 @@ NSString *const MPKitKochavaEnhancedDeeplinkRawKey = @"raw";
 
 NSString *const kvAppId = @"appId";
 NSString *const kvCurrency = @"currency";
-NSString *const kvUseCustomerId = @"useCustomerId";
-NSString *const kvIncludeOtherUserIds = @"passAllOtherUserIdentities";
+NSString *const kvUserIdentificationType = @"userIdentificationType";
+NSString *const kvEmailIdentificationType = @"emailIdentificationType";
 NSString *const kvRetrieveAttributionData = @"retrieveAttributionData";
 NSString *const kvEnableLogging = @"enableLogging";
 NSString *const kvLimitAdTracking = @"limitAdTracking";
@@ -130,83 +130,6 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
 }
 
 #pragma mark Accessors and private methods
-- (void)identityLinkCustomerId {
-    FilteredMParticleUser *user = [self currentUser];
-    if (!user || user.userIdentities.count == 0) {
-        return;
-    }
-    
-    NSMutableDictionary *identityInfo = [[NSMutableDictionary alloc] initWithCapacity:user.userIdentities.count];
-    NSString *identityKey;
-    
-    NSString *identityValue = user.userIdentities[@(MPUserIdentityCustomerId)];
-    if (identityValue) {
-        identityKey = @"CustomerId";
-        identityInfo[identityKey] = identityValue;
-    }
-    
-    for (NSString *key in identityInfo.allKeys) {
-        [KVAIdentityLink registerWithName:key identifier:identityInfo[key]];
-    }
-}
-
-- (void)identityLinkOtherUserIds {
-    FilteredMParticleUser *user = [self currentUser];
-    if (!user.userIdentities || user.userIdentities.count == 0) {
-        return;
-    }
-    
-    NSMutableDictionary *identityInfo = [[NSMutableDictionary alloc] initWithCapacity:user.userIdentities.count];
-    NSString *identityKey;
-    MPUserIdentity userIdentity;
-    for (NSNumber *userIdentityType in user.userIdentities) {
-        userIdentity = [userIdentityType integerValue];
-        
-        switch (userIdentity) {
-            case MPUserIdentityEmail:
-                identityKey = @"Email";
-                break;
-                
-            case MPUserIdentityOther:
-                identityKey = @"OtherId";
-                break;
-                
-            case MPUserIdentityFacebook:
-                identityKey = @"Facebook";
-                break;
-                
-            case MPUserIdentityTwitter:
-                identityKey = @"Twitter";
-                break;
-                
-            case MPUserIdentityGoogle:
-                identityKey = @"Google";
-                break;
-                
-            case MPUserIdentityYahoo:
-                identityKey = @"Yahoo";
-                break;
-                
-            case MPUserIdentityMicrosoft:
-                identityKey = @"Microsoft";
-                break;
-                
-            default:
-                continue;
-                break;
-        }
-        
-        NSString *identityValue = user.userIdentities[userIdentityType];
-        if (identityValue) {
-            identityInfo[identityKey] = identityValue;
-        }
-    }
-    
-    for (NSString *key in identityInfo.allKeys) {
-        [KVAIdentityLink registerWithName:key identifier:identityInfo[key]];
-    }
-}
-
 - (NSError *)errorWithMessage:(NSString *)message {
     NSError *error = [NSError errorWithDomain:MPKitKochavaErrorDomain code:0 userInfo:@{MPKitKochavaErrorKey:message}];
     return error;
@@ -230,13 +153,85 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
     }];
 }
 
-- (void)synchronize {
-    if ([self.configuration[kvUseCustomerId] boolValue]) {
-        [self identityLinkCustomerId];
+- (void)synchronizeIdentity {
+    FilteredMParticleUser *user = [self currentUser];
+    if (!user.userIdentities || user.userIdentities.count == 0) {
+        return;
     }
     
-    if ([self.configuration[kvIncludeOtherUserIds] boolValue]) {
-        [self identityLinkOtherUserIds];
+    NSMutableDictionary *identityInfo = [[NSMutableDictionary alloc] initWithCapacity:user.userIdentities.count];
+    NSString *identityKey;
+    MPUserIdentity userIdentity;
+    for (NSNumber *userIdentityType in user.userIdentities) {
+        userIdentity = [userIdentityType integerValue];
+        
+        switch (userIdentity) {
+            case MPUserIdentityCustomerId:
+                identityKey = @"CustomerId";
+                break;
+                
+            case MPUserIdentityOther:
+                identityKey = @"Other";
+                break;
+                
+            case MPUserIdentityOther2:
+                identityKey = @"Other2";
+                break;
+                
+            case MPUserIdentityOther3:
+                identityKey = @"Other3";
+                break;
+                
+            case MPUserIdentityOther4:
+                identityKey = @"Other4";
+                break;
+                
+            case MPUserIdentityOther5:
+                identityKey = @"Other5";
+                break;
+                
+            case MPUserIdentityOther6:
+                identityKey = @"Other6";
+                break;
+                
+            case MPUserIdentityOther7:
+                identityKey = @"Other7";
+                break;
+                
+            case MPUserIdentityOther8:
+                identityKey = @"Other8";
+                break;
+                
+            case MPUserIdentityOther9:
+                identityKey = @"Other9";
+                break;
+                
+            case MPUserIdentityOther10:
+                identityKey = @"Other10";
+                break;
+                
+            case MPUserIdentityEmail:
+                identityKey = @"Email";
+                break;
+                
+            default:
+                continue;
+                break;
+        }
+        
+        NSString *identityValue = user.userIdentities[userIdentityType];
+        if (identityValue) {
+            if ([self.configuration[kvUserIdentificationType] isEqualToString:identityKey]) {
+                identityInfo[identityKey] = identityValue;
+            }
+            if ([self.configuration[kvEmailIdentificationType] isEqualToString:identityKey]) {
+                identityInfo[identityKey] = identityValue;
+            }
+        }
+    }
+    
+    for (NSString *key in identityInfo.allKeys) {
+        [KVAIdentityLink registerWithName:key identifier:identityInfo[key]];
     }
 }
 
@@ -277,8 +272,8 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
         KVALog.shared.level = [self.configuration[kvEnableLogging] boolValue] ? KVALogLevel.debug : KVALogLevel.never;
     }
     
-    if ([self.configuration[kvUseCustomerId] boolValue] || [self.configuration[kvIncludeOtherUserIds] boolValue]) {
-        [self synchronize];
+    if (self.configuration[kvUserIdentificationType] || self.configuration[kvEmailIdentificationType] ) {
+        [self synchronizeIdentity];
     }
     
     NSDictionary *userActivityDictionary = self.launchOptions[UIApplicationLaunchOptionsUserActivityDictionaryKey];
@@ -429,21 +424,9 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
         return execStatus;
     }
     
-    if (user.userIdentities[@(identityType)] && [user.userIdentities[@(identityType)] isEqual:identityString]) {
-        execStatus = [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeRequirementsNotMet];
-        return execStatus;
-    }
-    
-    if (identityType == MPUserIdentityCustomerId) {
-        if ([self.configuration[kvUseCustomerId] boolValue]) {
-            [self identityLinkCustomerId];
-            execStatus = [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
-        }
-    } else {
-        if ([self.configuration[kvIncludeOtherUserIds] boolValue]) {
-            [self identityLinkOtherUserIds];
-            execStatus = [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
-        }
+    if (self.configuration[kvUserIdentificationType] || self.configuration[kvEmailIdentificationType] ) {
+        [self synchronizeIdentity];
+        execStatus = [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
     }
     
     if (!execStatus) {
