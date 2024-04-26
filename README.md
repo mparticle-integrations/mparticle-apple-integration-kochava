@@ -4,21 +4,19 @@ This repository contains the [Kochava](https://www.kochava.com) integration for 
 
 ## Installation
 
-KochavaTracker 4.0.0 and on is a Swift package.  To install it, simply add this package as a dependency.
+Kochava's SDK, as of version 8.0.0, no longer supports CocoaPods. As this version is the minimum required for App Store submission due to the iOS 17 privacy manifest changes, the mParticle Kochava Kit by association no longer supports CocoaPods either. 
 
 In Xcode, see File > Swift Packages > Add Package Dependency ... > and enter the URL for this package repository.
 
-## Integration using CocoaPods
+The mParticle Kochava Kit contains two build targets: `mParticle-Kochava` and `mParticle-Kochava-NoTracking`. The `mParticle-Kochava` retains all of the same functionality of the previous version of Kochava, while the `mParticle-Kochava-NoTracking` removes the parts that Apple defines as "tracking".
 
-Prior to 4.0.0, KochavaTracker supported CocoaPods.
+Specifically this means, `mParticle-Kochava` depends on the `KochavaNetworking`, `KochavaMeasurement`, and `KochavaTracking` packages, while the `mParticle-Kochava-NoTracking` target only depends on the `KochavaNetworking` and `KochavaMeasurement` packages.
+
+You can read more about that in Kochava's documentation here: https://support.kochava.com/sdk-integration/ios-sdk-integration/ios-migrating-to-v8/
 
 ### Adding the integration
 
-1. Add the kit dependency to your app's Podfile:
-
-    ```
-    pod 'mParticle-Kochava', '~> 8.0'
-    ```
+1. Add this kit to your Xcode project using SPM, and choose either `mParticle-Kochava` or `mParticle-Kochava-NoTracking`
 
 2. Follow the mParticle iOS SDK [quick-start](https://github.com/mParticle/mparticle-apple-sdk), then rebuild and launch your app, and verify that you see `"Included kits: { Kochava }"` in your Xcode console 
 
