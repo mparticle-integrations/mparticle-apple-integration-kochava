@@ -1,9 +1,9 @@
 #import "MPKitKochava.h"
 #import "MPKochavaSpatialCoordinate.h"
-#if defined(__has_include) && __has_include(<KochavaTracker/KochavaTracker.h>)
-#import <KochavaTracker/KochavaTracker.h>
+#if defined(__has_include) && __has_include(<KochavaMeasurement/KochavaMeasurement.h>)
+#import <KochavaMeasurement/KochavaMeasurement.h>
 #else
-#import "KochavaTracker.h"
+#import "KochavaMeasurement.h"
 #endif
 
 NSString *const MPKitKochavaErrorKey = @"mParticle-Kochava Error";
@@ -136,8 +136,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
 }
 
 - (void)retrieveAttributionWithCompletionHandler:(void(^)(NSDictionary *attribution))completionHandler {
-    [KVATracker.shared.attribution retrieveResultWithCompletionHandler:^(KVAAttributionResult * _Nonnull attributionResult)
-     {
+    [KVAMeasurement.shared.attribution retrieveResultWithClosure_didComplete:^(KVAMeasurement_Attribution_Result * _Nonnull attributionResult) {
         if (!attributionResult.rawDictionary) {
             [self->_kitApi onAttributionCompleteWithResult:nil error:[self errorWithMessage:@"Received nil attributionData from Kochava"]];
         } else {
@@ -252,24 +251,24 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
 
 - (void)start {
     if (self.configuration[kvEnableATT]) {
-        KVATracker.shared.appTrackingTransparency.enabledBool = [self.configuration[kvEnableATT] boolValue] ? TRUE : FALSE;
+        KVAMeasurement.shared.appTrackingTransparency.enabledBool = [self.configuration[kvEnableATT] boolValue] ? TRUE : FALSE;
     }
     
     if (self.configuration[kvEnableATTPrompt]) {
-        KVATracker.shared.appTrackingTransparency.autoRequestTrackingAuthorizationBool = [self.configuration[kvEnableATTPrompt] boolValue] ? TRUE : FALSE;
+        KVAMeasurement.shared.appTrackingTransparency.autoRequestTrackingAuthorizationBool = [self.configuration[kvEnableATTPrompt] boolValue] ? TRUE : FALSE;
         if (self.configuration[kvWaitIntervalATT] && [self.configuration[kvEnableATTPrompt] boolValue]) {
-            KVATracker.shared.appTrackingTransparency.authorizationStatusWaitTimeInterval = [self.configuration[kvWaitIntervalATT] integerValue];
+            KVAMeasurement.shared.appTrackingTransparency.authorizationStatusWaitTimeInterval = [self.configuration[kvWaitIntervalATT] integerValue];
         }
     }
         
-    [KVATracker.shared startWithAppGUIDString:self.configuration[kvAppId]];
+    [KVAMeasurement.shared startWithAppGUIDString:self.configuration[kvAppId]];
     
     if (self.configuration[kvLimitAdTracking]) {
-        KVATracker.shared.appLimitAdTracking.boolean = [self.configuration[kvLimitAdTracking] boolValue];
+        KVAMeasurement.shared.appLimitAdTracking.boolean = [self.configuration[kvLimitAdTracking] boolValue];
     }
     
     if (self.configuration[kvEnableLogging]) {
-        KVALog.shared.level = [self.configuration[kvEnableLogging] boolValue] ? KVALogLevel.debug : KVALogLevel.never;
+        KVALog.shared.level = [self.configuration[kvEnableLogging] boolValue] ? KVALog_Level.debug : KVALog_Level.never;
     }
     
     if (self.configuration[kvUserIdentificationType] || self.configuration[kvEmailIdentificationType] ) {
@@ -279,8 +278,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
     NSDictionary *userActivityDictionary = self.launchOptions[UIApplicationLaunchOptionsUserActivityDictionaryKey];
     if (userActivityDictionary == nil)
     {
-        [KVADeeplink processWithURL:nil closure_didComplete:^(KVADeeplink * _Nonnull deeplink)
-         {
+        [KVADeeplink processWithURL:nil closure_didComplete:^(KVADeeplink * _Nonnull deeplink) {
             NSString *destinationString = deeplink.destinationString;
             if (destinationString.length == 0) {
                 [self->_kitApi onAttributionCompleteWithResult:nil error:[self errorWithMessage:@"Received nil deeplink from Kochava"]];
@@ -318,7 +316,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
 }
 
 - (id const)providerKitInstance {
-    return [self started] ? KVATracker.shared : nil;
+    return [self started] ? KVAMeasurement.shared : nil;
 }
 
 - (MPKitAPI *)kitApi {
@@ -330,7 +328,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
 }
 
 - (MPKitExecStatus *)setOptOut:(BOOL)optOut {
-    KVATracker.shared.appLimitAdTracking.boolean = optOut;
+    KVAMeasurement.shared.appLimitAdTracking.boolean = optOut;
     
     MPKitExecStatus *execStatus = [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
     return execStatus;
@@ -347,7 +345,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
 }
 
 - (MPKitExecStatus *)routeEvent:(MPEvent *)event {
-    KVAEvent *kochavaEvent = [[KVAEvent alloc] initWithType:KVAEventType.custom];
+    KVAEvent *kochavaEvent = [[KVAEvent alloc] initWithType:KVAEvent_Type.custom];
     kochavaEvent.customEventName = event.name;
     kochavaEvent.infoDictionary = event.customAttributes;
     [kochavaEvent send];
@@ -356,7 +354,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
 }
 
 - (MPKitExecStatus *)routeCommerceEvent:(MPCommerceEvent *)commerceEvent {
-    KVAEvent *kochavaEvent = [[KVAEvent alloc] initWithType:KVAEventType.custom];
+    KVAEvent *kochavaEvent = [[KVAEvent alloc] initWithType:KVAEvent_Type.custom];
     NSString *eventName;
     if (commerceEvent.promotionContainer) {
         eventName = [NSString stringWithFormat:@"eCommerce - %@", KVNSStringFromPromotionAction(commerceEvent.promotionContainer.action)];
@@ -408,7 +406,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
 }
 
 - (MPKitExecStatus *)logScreen:(MPEvent *)event {
-    KVAEvent *kochavaEvent = [[KVAEvent alloc] initWithType:KVAEventType.custom];
+    KVAEvent *kochavaEvent = [[KVAEvent alloc] initWithType:KVAEvent_Type.custom];
     kochavaEvent.customEventName = [NSString stringWithFormat:@"Viewed %@", event.name];
     kochavaEvent.infoDictionary = event.customAttributes;
     [kochavaEvent send];
@@ -465,7 +463,7 @@ NSString *const kvEventTypeStringPromotionClick = @"click";
 }
 
 - (MPKitExecStatus *)setATTStatus:(MPATTAuthorizationStatus)status withATTStatusTimestampMillis:(NSNumber *)attStatusTimestampMillis  API_AVAILABLE(ios(14)){
-    KVATracker.shared.appTrackingTransparency.enabledBool = YES;
+    KVAMeasurement.shared.appTrackingTransparency.enabledBool = YES;
     
     return [[MPKitExecStatus alloc] initWithSDKCode:@(MPKitInstanceKochava) returnCode:MPKitReturnCodeSuccess];
 }

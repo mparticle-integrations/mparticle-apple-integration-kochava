@@ -5,13 +5,13 @@ NOTES="$2"
 # Update version number
 #
 
-# Update CocoaPods podspec file
-sed -i '' 's/\(^    s.version[^=]*= \).*/\1"'"$VERSION"'"/' mParticle-Kochava.podspec
+# Update VERSION file
+echo $PREFIXED_VERSION > VERSION
 
 # Make the release commit in git
 #
 
-git add mParticle-Kochava.podspec
+git add VERSION
 git commit -m "chore(release): $VERSION [skip ci]
 
 $NOTES"
