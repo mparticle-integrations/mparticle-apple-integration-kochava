@@ -20,7 +20,7 @@ let package = Package(
         .package(
             name: "mParticle-Apple-SDK",
             url: "https://github.com/mParticle/mparticle-apple-sdk",
-            .upToNextMajor(from: "8.19.0")
+            .upToNextMajor(from: "8.22.0")
         ),
         .package(
             name: "KochavaNetworking",
@@ -43,11 +43,13 @@ let package = Package(
             name: "mParticle-Kochava",
             dependencies: ["mParticle-Apple-SDK", "KochavaNetworking", "KochavaMeasurement", "KochavaTracking"],
             path: "mParticle-Kochava",
+            resources: [.process("PrivacyInfo.xcprivacy")],
             publicHeadersPath: "."),
         .target(
             name: "mParticle-Kochava-NoTracking",
             dependencies: ["mParticle-Apple-SDK", "KochavaNetworking", "KochavaMeasurement"],
             path: "mParticle-Kochava-NoTracking",
+            resources: [.process("PrivacyInfo.xcprivacy")],
             publicHeadersPath: "."),
     ]
 )
