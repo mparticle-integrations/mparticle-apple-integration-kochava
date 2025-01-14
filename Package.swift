@@ -5,8 +5,8 @@ import PackageDescription
 let package = Package(
     name: "mParticle-Kochava",
     platforms: [
-        .iOS("13.0"),
-        .tvOS("13.0"),
+        .iOS("14.0"),
+        .tvOS("14.0"),
     ],
     products: [
         .library(
@@ -25,17 +25,17 @@ let package = Package(
         .package(
             name: "KochavaNetworking",
             url: "https://github.com/Kochava/Apple-SwiftPackage-KochavaNetworking-XCFramework",
-            .upToNextMajor(from: "8.0.0")
+            .upToNextMajor(from: "9.0.0")
         ),
         .package(
             name: "KochavaMeasurement",
             url: "https://github.com/Kochava/Apple-SwiftPackage-KochavaMeasurement-XCFramework",
-            .upToNextMajor(from: "8.0.0")
+            .upToNextMajor(from: "9.0.0")
         ),
         .package(
             name: "KochavaTracking",
             url: "https://github.com/Kochava/Apple-SwiftPackage-KochavaTracking-XCFramework",
-            .upToNextMajor(from: "8.0.0")
+            .upToNextMajor(from: "9.0.0")
         ),
     ],
     targets: [
